@@ -5,13 +5,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class ConnectingWindow extends JFrame {
+public class ConnectingPanel extends JFrame {
 	
-	public ConnectingWindow(ArrayList<Network> networksAvailable) {
+	public ConnectingPanel(ArrayList<Network> networksAvailable) {
 
 		// Initialisation des panels.
 		JPanel panelSaisie = new JPanel();
-		JPanel panelGlobal = new JPanel();
 		JPanel panelButtons = new JPanel();
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setSize(1080, 720);
@@ -52,12 +51,10 @@ public class ConnectingWindow extends JFrame {
 		
 	
 		GridLayout globalLayout = new GridLayout(2,0);
-		panelGlobal.setLayout(globalLayout);
+		this.setLayout(globalLayout);
 		
-		panelGlobal.add(panelSaisie);
-		panelGlobal.add(buttonsBox);
-		
-		
-		this.add(panelGlobal);
+		this.add(panelSaisie);
+		this.add(buttonsBox);
+
 	}
 }

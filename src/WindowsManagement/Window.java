@@ -20,9 +20,11 @@ public class Window {
 		ArrayList<Network> networksAvailable = new ArrayList<Network>();
 		//networksAvailable.add(new Network(new Admin("Bidule", 100), "network"));
 		
-		ConnectingWindow wdw = new ConnectingWindow(networksAvailable);
-		RegisterWindow rwdw = new RegisterWindow();
-		wdw.setVisible(true);
+		ConnectingPanel connectPanel = new ConnectingPanel(networksAvailable);
+		RegisterPanel registerPanel = new RegisterPanel();
+		
+		JFrame w = new JFrame("Network exchanges");
+		w.setContentPane(connectPanel);
 		
 		/**
 		JFrame frame = new JFrame("Network Exchanges");
@@ -72,6 +74,12 @@ public class Window {
 		
 		frame.setVisible(true);
 		*/
+	}
+	
+	private void changePanel(JPanel pan, JFrame f) {
+		f.getContentPane().removeAll();
+		f.setContentPane(pan);
+		f.revalidate();
 	}
 	
 }

@@ -3,14 +3,11 @@ package WindowsManagement;
 import javax.swing.*;
 import java.awt.*;
 
-public class RegisterWindow extends JFrame {
+public class RegisterPanel extends JPanel {
 
-	public RegisterWindow() {
+	public RegisterPanel() {
 		
-		JPanel panelGlobal = new JPanel();
 		JPanel panelSaisie = new JPanel();
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setSize(1080, 720);
 		
 		JTextField username = new JTextField(10);
 		JLabel usernameLabel = new JLabel("Username : ");
@@ -35,11 +32,10 @@ public class RegisterWindow extends JFrame {
 		
 		GridLayout globalLayout = new GridLayout(2,1);
 		globalLayout.setVgap(15);
-		panelGlobal.add(panelSaisie);
-		panelGlobal.add(registerButton);
-		panelGlobal.setLayout(globalLayout);
+		this.add(panelSaisie);
+		this.add(registerButton);
+		this.setLayout(globalLayout);
 		
-		this.add(panelGlobal);
 		
 		
 	}
