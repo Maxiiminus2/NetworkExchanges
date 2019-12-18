@@ -28,6 +28,10 @@ public class Task {
 		this.hoursSpent = 0;
 	}
 	
+	public boolean equals(Task t) {
+		return this.name.equals(t.name);
+	}
+	
 	public String toString() {
 		String result = this.service.name + " : " + this.name + "\n" + this.contributorsNb + "/" + this.contributorsRequiredNb + " contributeurs.";
 		return result;
@@ -40,9 +44,10 @@ public class Task {
 	 */
 	public void addContributor(Member m) throws TaskException{
 		if (this.contributorsNb < this.contributorsRequiredNb) {
-			if (m.canDo(this.service) && !m.equals(this.beneficiary) && !m.hasTask(this)) {
+			if (m.canDo(this.service) && !m.equals(this.beneficiary) && !m.isSubscribedToTask(this)) {
 				this.contributors[contributorsNb] = m;
 				this.contributorsNb++;
+				m.addTaskSubscribed(this);
 			} else {
 				throw new TaskException("Ce membre n'est pas qualifié pour réaliser cette tâche !");
 			}
@@ -71,8 +76,10 @@ public class Task {
 	 * Permet de valider une tâche et de l'afficher que tâche à faire aux contributeurs.
 	 */
 	public void validateTask() {
-		for (Member m : contributors) {
-			m.addTaskToDo(this);
+		if (this.enoughMembers()) {
+			for (Member m : contributors) {
+				m.addTaskToDo(this);
+			}
 		}
 	}
 	
@@ -80,8 +87,13 @@ public class Task {
 		return this.isDone;
 	}	
 	
-	public void setTaskDone() {
-		this.isDone = true;
+	public void setTaskDone(Member m, int hoursSpent) {
+		if(this.getBeneficiary().equals(m)) {
+			this.isDone = true;
+			this.hoursSpent = hoursSpent;
+		}
+		
+		
 	}
 	
 	public Member getBeneficiary() {
@@ -108,16 +120,29 @@ public class Task {
 		return (int) (this.service.hourlyCost * this.hoursSpent * this.contributorsNb);
 	}
 	
+	public int getBeneficiaryPrice() {
+		if (this.isVolontary()) return 0;
+		else {
+			return (int) (this.getFullPrice() * this.getBeneficiary().getReductionValue());
+		}
+	}
+	
+	public boolean isVolontary() {
+		return this.isVolontary;
+	}
+	
 	/**
 	 * Permet de payer les contributeurs lorsqu'ils ont effectué une tâche.
 	 * @param member
 	 * @throws MemberException
 	 */
-	public void payContributors(Member member) throws MemberException {
-		if (member.equals(this.beneficiary)) {
+	public void payContributors(Member benef) throws MemberException {
+		if (benef.equals(this.beneficiary)) {
 			int amountPerContributor = (int) ( this.service.hourlyCost * this.hoursSpent);
-			for (Member m : contributors) {
-				member.sendMoney(amountPerContributor, member);
+			int amountPerContributorLeft = (int) (amountPerContributor - amountPerContributor * benef.getReductionValue());
+			for (Member c : contributors) {
+				benef.sendMoney( (int)(amountPerContributor * benef.getReductionValue()), c);
+				if (benef.getReductionValue() != 1) c.receiveMoney(amountPerContributorLeft);
 			}
 		}
 	}

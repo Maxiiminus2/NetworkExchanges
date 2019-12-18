@@ -7,6 +7,7 @@ public class Member {
 	String name ; 
 	int wallet ;
 	private ArrayList<Service> services ;
+	private ArrayList<Task> tasksSubscribed;
 	private ArrayList<Task> tasksToDo;
 	private ArrayList<Task> tasksBeneficiary;
 	private Reduction reduction;
@@ -15,13 +16,14 @@ public class Member {
 		this.services =  new ArrayList<Service>();
 		this.tasksToDo = new ArrayList<Task>();
 		this.tasksBeneficiary = new ArrayList<Task>();
+		this.tasksSubscribed = new ArrayList<Task>();
 		this.name = name ;
 		this.wallet = wallet;
 		this.reduction = reduction;
 	}
 	
-	public Reduction getReduction() {
-		return this.reduction;
+	public double getReductionValue() {
+		return this.reduction.getReductionValue();
 	}
 	
 	/**
@@ -29,13 +31,25 @@ public class Member {
 	 * @param t
 	 * @return vrai si le membre doit faire la tâche, faux sinon.
 	 */
-	public boolean hasTask(Task t) {
+	public boolean hasTaskToDo(Task t) {
 		boolean hasTask = false;
 		for (Task task : this.tasksToDo) {
 			hasTask = hasTask || t.equals(task);
 		}
 		
 		return hasTask;
+	}
+	
+	public boolean isSubscribedToTask(Task t) {
+		boolean subscribed = false;
+		for (Task task : this.tasksSubscribed) {
+			subscribed = subscribed || t.equals(task);
+		}
+		return subscribed;
+	}
+	
+	public void addTaskSubscribed(Task t) {
+		this.tasksSubscribed.add(t);
 	}
 	
 	/**
@@ -68,14 +82,18 @@ public class Member {
 	 * @throws MemberException
 	 */
 	public void payContributors(Task t) throws MemberException {
-		if (t.getBeneficiary().equals(this) && this.wallet >= t.getFullPrice()) {
+		if (t.getBeneficiary().equals(this) && this.wallet >= t.getBeneficiaryPrice()) {
 			t.payContributors(this);
 		}
 	}
 	
-	public void setTaskDone(Task t) throws MemberException {
+	public ArrayList<Task> getTasksBeneficiary() {
+		return this.tasksBeneficiary;
+	}
+	
+	public void setTaskDone(Task t, int hoursSpent) throws MemberException {
 		if(t.getBeneficiary().equals(this)) {
-			t.setTaskDone();
+			t.setTaskDone(this, hoursSpent);
 		} else {
 			throw new MemberException("Vous n'êtes pas autorisé à valider cette tâche !");
 		}
@@ -154,6 +172,10 @@ public class Member {
 	
 	public String getName() {
 		return this.name;
+	}
+
+	public int getWallet() {
+		return this.wallet;
 	}
 	
 

@@ -1,15 +1,15 @@
 package src;
 
 	public class Reduction {
-			String nameReduction ;
-			double reduction ;
+			private String nameReduction ;
+			private double reduction ;
 	
 	public Reduction ( String nameReduction , double reduction) {
 		
 			this.nameReduction = nameReduction ; 
 			this.reduction = reduction ;
 }
-	public double getReduction() {
+	public double getReductionValue() {
 		return this.reduction;
 	}
 }

@@ -6,4 +6,8 @@ public class TaskException extends Exception {
 		public TaskException(String s) {
 			this.s = s;
 		}
+		
+		public String getMessage() {
+			return this.s;
+		}
 }
