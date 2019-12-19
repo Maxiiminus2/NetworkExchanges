@@ -16,6 +16,7 @@ import java.util.ArrayList;
 		this.addMember(admin, this.password); // Un admin est également un membre.
 		this.admin = admin;
 		this.tasksAvailable = new ArrayList<Task>();
+		this.pendingMembers = new ArrayList<Member>();
 		// créé un mot de passe aléatoire, puis le communique à l'admin.
 		admin.setNetworkPassword(this.password);
 		
@@ -79,6 +80,10 @@ import java.util.ArrayList;
 			result += t.toString() + "\n" + "\n";
 		}
 		return result;
+	}
+	
+	public ArrayList<Member> getNetworkMembers(){
+		return this.member;
 	}
 	
 }

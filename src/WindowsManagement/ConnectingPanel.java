@@ -56,10 +56,22 @@ public class ConnectingPanel extends JPanel {
 		
 		connect.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				// Utiliser une méthode checkPassword dans Member à la place.
 				if(passwordCorrect(username.getText(), password.getText())) {
 					System.out.println("GOOD");
-					setConnectedUserAndNetwork(username.getText(), networkList.getSelectedItem());
-					setDefaultMemberDisplayPanel();
+					if (isNetworkMember(username.getText(), (Network) networkList.getSelectedItem())) {
+						setConnectedUserAndNetwork(username.getText(), networkList.getSelectedItem());
+						setDefaultMemberDisplayPanel();
+					} else {
+						System.out.println("Membre absent.");
+						if(isMemberPending(username.getText(), (Network) networkList.getSelectedItem())) {
+							System.out.println("Votre demande d'adhésion est toujours en attente.");
+						} else {
+							addPendingMember(username.getText(), (Network) networkList.getSelectedItem());
+							System.out.println("Votre demande d'adhésion a bien été prise en compte.");
+						}
+						// Ajoute le membre dans la liste d'attente.
+					}	
 				} else {
 					System.out.println("WRONG");
 				}
@@ -103,6 +115,32 @@ public class ConnectingPanel extends JPanel {
 		
 	}
 	
+	/**
+	 * Ajoute un membre en attente de validation de l'administrateur dans un réseau.
+	 * @param username
+	 * @param n
+	 */
+	public void addPendingMember(String username, Network n) {
+		// TODO Auto-generated method stub
+		n.addPendingMember(this.getMember(username));
+		
+		
+	}
+
+	/**
+	 * Détermine si un utilisateur est déjà en attente que l'administrateur valide son adhésion au réseau.
+	 * @param username
+	 * @param n
+	 * @return
+	 */
+	public boolean isMemberPending(String username, Network n) {
+		
+		for (Member m : n.getPendingMembers()) {
+			if (m.getName().contentEquals(username)) return true;
+		}
+		return false;
+	}
+
 	public void setRegisterPanel() {
 		this.container.changePanel("Register");
 	}
@@ -132,7 +170,11 @@ public class ConnectingPanel extends JPanel {
 		return null;
 	}
 	
-	public boolean isNetworkMember(String memberName) {
+	public boolean isNetworkMember(String memberName, Network n) {
+		
+		for (Member m : n.getNetworkMembers()) {
+			if(m.getName().equals(memberName)) return true;
+		}
 		return false;
 		
 	}
