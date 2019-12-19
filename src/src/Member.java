@@ -4,22 +4,35 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Member {
-	String name ; 
+	String username ; 
 	int wallet ;
 	private ArrayList<Service> services ;
 	private ArrayList<Task> tasksSubscribed;
 	private ArrayList<Task> tasksToDo;
 	private ArrayList<Task> tasksBeneficiary;
 	private Reduction reduction;
+	private String password;
 
-	public Member (String name , int wallet, Reduction reduction ) {
+	public Member (String username , int wallet, Reduction reduction, String password ) {
 		this.services =  new ArrayList<Service>();
 		this.tasksToDo = new ArrayList<Task>();
 		this.tasksBeneficiary = new ArrayList<Task>();
 		this.tasksSubscribed = new ArrayList<Task>();
-		this.name = name ;
+		this.username = username ;
 		this.wallet = wallet;
 		this.reduction = reduction;
+		this.password = password;
+	}
+	
+	public Member (String username , int wallet, String password ) {
+		this.services =  new ArrayList<Service>();
+		this.tasksToDo = new ArrayList<Task>();
+		this.tasksBeneficiary = new ArrayList<Task>();
+		this.tasksSubscribed = new ArrayList<Task>();
+		this.username = username ;
+		this.wallet = wallet;
+		this.reduction = null;
+		this.password = password;
 	}
 	
 	public double getReductionValue() {
@@ -171,11 +184,16 @@ public class Member {
 	}
 	
 	public String getName() {
-		return this.name;
+		return this.username;
 	}
 
 	public int getWallet() {
 		return this.wallet;
+	}
+
+	public String getPassword() {
+		// TODO Auto-generated method stub
+		return this.password;
 	}
 	
 

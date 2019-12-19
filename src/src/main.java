@@ -4,14 +4,14 @@ public class main {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		Admin lea = new Admin("Léa", 0);
+		Admin lea = new Admin("Léa", 0, "abc");
 		Network network = lea.createNetwork("Network POO");
 		Reduction classeNormale = new Reduction("Classe normale", 1);
 		Reduction classeMoyenne = new Reduction("Classe moyenne", 0.5);
-		Member Pierre = new Member("Pierre", 150, classeMoyenne);
+		Member Pierre = new Member("Pierre", 150, classeMoyenne, "abc");
 		Service jardinage =  new Service("Jardinage", 10);
 		Service bricolage = new Service("Bricolage", 15);
-		Member Jean = new Member("Jean", 0, classeMoyenne);
+		Member Jean = new Member("Jean", 0, classeMoyenne, "abc");
 		Jean.addService(jardinage);
 		Pierre.addService(bricolage);
 		lea.addService(bricolage);
