@@ -44,13 +44,15 @@ public class RegisterPanel extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(username.getText() != null && password.getText() != null && isInteger(wallet.getText())){
+				if(username.getText() != null && password.getText() != null && isInteger(wallet.getText()) && usernameAvailable(username.getText())){
 					Member m = new Member(username.getText(), Integer.parseInt(wallet.getText()), password.getText());
 					addMember(m);
 					setConnexionPanel();
 				}
 				
 			}
+
+			
 			
 		});
 		
@@ -79,5 +81,14 @@ public class RegisterPanel extends JPanel {
 	
 	public void setConnexionPanel() {
 		this.container.changePanel("Connexion");
+	}
+	
+	private boolean usernameAvailable(String text) {
+
+		for (Member m : this.container.getMembers()) {
+			if(m.getName().equals(text)) return false;
+		}
+		
+		return true;
 	}
 }

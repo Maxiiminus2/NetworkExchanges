@@ -5,6 +5,7 @@ import java.util.ArrayList;
 		String name ;
 		Admin admin;
 		ArrayList<Member> member;
+		ArrayList<Member> pendingMembers;
 		ArrayList<Task> tasksAvailable;
 		private final int password;
 	
@@ -30,6 +31,22 @@ import java.util.ArrayList;
 	 */
 	public void addMember (Member m, int password) {
 		if (this.password == password) this.member.add(m);
+	}
+	
+	public ArrayList<Member> getPendingMembers(){
+		return this.pendingMembers;
+	}
+	
+	public void addPendingMember(Member m) {
+		this.pendingMembers.add(m);
+	}
+	
+	private void removePendingMember(Member m) {
+		this.pendingMembers.remove(m);
+	}
+	
+	public Admin getAdmin() {
+		return this.admin;
 	}
 	
 	/**

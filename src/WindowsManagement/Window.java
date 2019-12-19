@@ -14,22 +14,22 @@ public class Window extends JFrame {
 	public ConnectingPanel connectPanel;
 	public RegisterPanel regPanel;
 	public CreateNetworkPanel cnPanel;
+	public DefaultMemberDisplayPanel dmdPanel;
 	
-	private Network networkSelected;
+	private Network networkSelected = null;
 	private Member connectedUser = null;
-	private ArrayList<Member> members;
+	private ArrayList<Member> members = new ArrayList<Member>();
 	private ArrayList<Network> networksAvailable = new ArrayList<Network>();
 	
 	public Window() {
 		
 		// CODE FINAL 
-		
-		networkSelected = null;
-		connectedUser = null;
+
 		//networksAvailable.add(new Network(new Admin("Bidule", 100), "network"));
 		this.connectPanel = new ConnectingPanel(this.networksAvailable, this);
 		this.regPanel = new RegisterPanel(this);
 		this.cnPanel = new CreateNetworkPanel(this);
+		this.dmdPanel = new DefaultMemberDisplayPanel(this);
 		
 		this.members = new ArrayList<Member>();
 		
@@ -39,54 +39,6 @@ public class Window extends JFrame {
 		this.setContentPane(connectPanel);
 		this.setVisible(true);
 		
-		/**
-		JFrame frame = new JFrame("Network Exchanges");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(1080,720);
-		
-		JMenuBar menu = new JMenuBar();
-		
-		JMenu admin = new JMenu("Admin");
-		JMenu network = new JMenu("Network");
-		
-		menu.add(admin);
-		menu.add(network);
-		
-		JMenuItem adminValidateTask = new JMenuItem("Validate task");
-		JMenuItem adminAddMember = new JMenuItem("Add member");
-		JMenuItem adminRemoveMember = new JMenuItem("Remove member");
-		
-		admin.add(adminValidateTask);
-		admin.add(adminAddMember);
-		admin.add(adminRemoveMember);
-		
-		JMenuItem memberCreateNewTask = new JMenuItem("Create new task");
-		
-		network.add(memberCreateNewTask);
-		
-		JPanel panel = new JPanel();
-		enterText = new JLabel("Enter text");
-		JTextField tf = new JTextField(10);
-		JButton send = new JButton("Send");
-		JButton reset = new JButton("Reset");
-		
-		send.addActionListener(new ButtonListener());
-		
-		panel.add(enterText);
-		panel.add(tf);
-		panel.add(send);
-		panel.add(reset);
-		
-		JTextArea textArea = new JTextArea();
-		
-		
-		frame.add(BorderLayout.NORTH, menu);
-		frame.add(BorderLayout.SOUTH, panel);
-		frame.add(BorderLayout.CENTER, textArea);
-
-		
-		frame.setVisible(true);
-		*/
 	}
 	
 	public void changePanel(String pan) {
@@ -99,7 +51,8 @@ public class Window extends JFrame {
 		
 		if (pan.equals("Register")) this.setContentPane(this.regPanel);
 		else if (pan.equals("Connexion")) this.setContentPane(this.connectPanel);
-		else if (pan.contentEquals("CN")) this.setContentPane(this.cnPanel);
+		else if (pan.equals("CN")) this.setContentPane(this.cnPanel);
+		else if (pan.equals("DMD")) this.setContentPane(this.dmdPanel);
 		this.revalidate();
 		this.repaint();
 		
@@ -117,6 +70,7 @@ public class Window extends JFrame {
 		this.connectPanel = new ConnectingPanel(this.networksAvailable, this);
 		this.regPanel = new RegisterPanel(this);
 		this.cnPanel = new CreateNetworkPanel(this);
+		this.dmdPanel = new DefaultMemberDisplayPanel(this);
 	}
 
 	public ArrayList<Member> getMembers() {
@@ -134,6 +88,26 @@ public class Window extends JFrame {
 	public void addNetwork(Network n) {
 		// TODO Auto-generated method stub
 		this.networksAvailable.add(n);
+	}
+
+	public void setConnectedUserAndNetwork(Member m, Network network) {
+		// TODO Auto-generated method stub
+		this.connectedUser = m;
+		this.networkSelected = network;
+	}
+	
+	public void disconnectUserAndNetwork() {
+		this.connectedUser = null;
+		this.networkSelected = null;
+	}
+
+	public Network getSelectedNetwork() {
+		// TODO Auto-generated method stub
+		return this.networkSelected;
+	}
+	
+	public Member getConnectedUser() {
+		return this.connectedUser;
 	}
 	
 }

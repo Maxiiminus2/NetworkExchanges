@@ -48,7 +48,7 @@ public class CreateNetworkPanel extends JPanel {
 					if(passwordCorrect(username.getText(), password.getText())) {
 						Member adminM = getMember(username.getText());
 						Admin admin = new Admin(adminM.getName(), adminM.getWallet(), adminM.getPassword());
-						Network n = new Network(admin, networkName.getText());
+						Network n = admin.createNetwork(networkName.getText());
 						addNetwork(n);
 						setConnexionPanel();
 					}
@@ -85,6 +85,7 @@ public class CreateNetworkPanel extends JPanel {
 	}
 	
 	public void addNetwork(Network n) {
+		System.out.println(n.getAdmin().getName());
 		this.container.addNetwork(n);
 	}
 	

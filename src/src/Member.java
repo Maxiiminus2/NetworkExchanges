@@ -39,6 +39,10 @@ public class Member {
 		return this.reduction.getReductionValue();
 	}
 	
+	public boolean equals(Member m) {
+		return this.getName().equals(m.getName());
+	}
+	
 	/**
 	 * Détermine si un membre à une tâche t à faire.
 	 * @param t

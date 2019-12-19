@@ -46,6 +46,7 @@ public class ConnectingPanel extends JPanel {
 		if(!(networksAvailable.size()>0)) connect.setEnabled(false);
 		JButton register = new JButton("Register");
 		JButton createNetwork = new JButton("Create network");
+		if(!(this.container.getMembers().size()>0)) createNetwork.setEnabled(false);
 		
 		Box buttonsBox = Box.createHorizontalBox();
 		
@@ -57,6 +58,8 @@ public class ConnectingPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				if(passwordCorrect(username.getText(), password.getText())) {
 					System.out.println("GOOD");
+					setConnectedUserAndNetwork(username.getText(), networkList.getSelectedItem());
+					setDefaultMemberDisplayPanel();
 				} else {
 					System.out.println("WRONG");
 				}
@@ -108,8 +111,29 @@ public class ConnectingPanel extends JPanel {
 		this.container.changePanel("CN");
 	}
 	
+	public void setDefaultMemberDisplayPanel() {
+		this.container.changePanel("DMD");
+	}
+	
 	public boolean passwordCorrect(String username, String password) {
 		return this.container.passwordCorrect(username, password);
 	}
 	
+	private void setConnectedUserAndNetwork(String username, Object network) {
+		Member m = this.getMember(username);
+		this.container.setConnectedUserAndNetwork(m, (Network) network);
+	}
+	
+	public Member getMember(String memberName) {
+		
+		for (Member m : this.container.getMembers()) {
+			if(m.getName().equals(memberName)) return m;
+		}
+		return null;
+	}
+	
+	public boolean isNetworkMember(String memberName) {
+		return false;
+		
+	}
 }
