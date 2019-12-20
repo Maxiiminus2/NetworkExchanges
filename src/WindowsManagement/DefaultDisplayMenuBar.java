@@ -77,6 +77,25 @@ public class DefaultDisplayMenuBar extends JMenuBar {
 		network.add(createTask);
 		network.add(availableTasks);
 		
+		tasksToDo.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				setPanel("TP");
+			}
+			
+		});
+		
+		tasksBeneficiary.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				setPanel("BT");
+			}
+			
+		});
+		
 		availableTasks.addActionListener(new ActionListener() {
 			
 			@Override
@@ -126,6 +145,14 @@ public class DefaultDisplayMenuBar extends JMenuBar {
 			admin.add(adminManageReductions);
 			
 			this.add(admin);
+			
+			adminValidateTask.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					setPanel("PT");
+				}
+			});
 			
 			adminAddMember.addActionListener(new ActionListener() {
 				

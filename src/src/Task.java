@@ -15,10 +15,12 @@ public class Task {
 	private int hoursSpent;
 	private int estimatedHoursNeeded;
 	private Service service;
+	private Network network;
+	private String status;
 	
 	// private Map<Member, Boolean> done;
 	
-	public Task(String name,  int contributorsRequiredNb, Member beneficiary, boolean isVolontary, Service service, int estimatedHours) {
+	public Task(String name,  int contributorsRequiredNb, Member beneficiary, boolean isVolontary, Service service, int estimatedHours, Network network) {
 		this.contributorsRequiredNb = contributorsRequiredNb;
 		this.name = name;
 		this.contributorsNb = 0;
@@ -29,6 +31,8 @@ public class Task {
 		this.service = service;
 		this.hoursSpent = 0;
 		this.estimatedHoursNeeded = estimatedHours;
+		this.network = network;
+		this.status = "Waiting for contributors";
 	}
 	
 	public boolean equals(Task t) {
@@ -87,10 +91,15 @@ public class Task {
 	/**
 	 * Permet de valider une tâche et de l'afficher que tâche à faire aux contributeurs.
 	 */
-	public void validateTask() {
-		if (this.enoughMembers()) {
+	public void setTaskToDo(Member b) {
+		if (this.enoughMembers() && this.getBeneficiary().getName().equals(b.getName())) {
+			this.getNetwork().setTaskBeingDone(this);
+			this.status = "Being done";
+
+
 			for (Member m : contributors) {
 				m.addTaskToDo(this);
+				m.removeSubscribedTask(this);
 			}
 		}
 	}
@@ -99,10 +108,11 @@ public class Task {
 		return this.isDone;
 	}	
 	
-	public void setTaskDone(Member m, int hoursSpent) {
+	public void setTaskDone(Member m) {
 		if(this.getBeneficiary().equals(m)) {
 			this.isDone = true;
-			this.hoursSpent = hoursSpent;
+			this.status = "Done";
+			this.network.addTaskHistory(this);
 		}
 		
 		
@@ -139,6 +149,13 @@ public class Task {
 		}
 	}
 	
+	public int getEstimatedBeneficiaryPrice() {
+		if  (this.isVolontary()) return 0;
+		else {
+			return (int) (this.getBeneficiary().getReductionValue() * this.getService().getHourlyCost() * this.estimatedHoursNeeded);
+		}
+	}
+	
 	public boolean isVolontary() {
 		return this.isVolontary;
 	}
@@ -172,5 +189,53 @@ public class Task {
 	public double getEstimatedHours() {
 		// TODO Auto-generated method stub
 		return this.estimatedHoursNeeded;
+	}
+
+	public Network getNetwork() {
+		// TODO Auto-generated method stub
+		return this.network;
+	}
+
+	public String getStatus() {
+		// TODO Auto-generated method stub
+		return this.status;
+	}
+
+	public void removeContributor(Member m) {
+		// TODO Auto-generated method stub
+		
+		int cIndex = this.getContributorIndex(m);
+		if (cIndex != -1) {
+			
+			m.removeSubscribedTask(this);
+			
+			for (int i = cIndex ; i < this.contributorsNb ; i++) {
+				if (i < this.contributorsRequiredNb - 1) this.contributors[i] = this.contributors[i+1];
+			}
+			this.contributors[this.contributorsNb-1] = null;
+		} else {
+			System.out.println("Ne participe pas à la tâche");
+		}
+		
+		this.contributorsNb--;
+	}
+	
+	private int getContributorIndex(Member m) {
+		for (int i = 0 ; i < this.contributorsRequiredNb ; i++) {
+			Member c = this.contributors[i]; 
+			if(c != null && c.getName().equals(m.getName())) return i;
+		}
+		
+		return -1;
+	}
+	
+	
+	public void setAdminValidate() {
+		this.status = "Waiting for payement";
+	}
+
+	public void setHoursSpent(int nb) {
+		// TODO Auto-generated method stub
+		this.hoursSpent = nb;
 	}
 }

@@ -7,9 +7,12 @@ import java.util.ArrayList;
 		ArrayList<Member> member;
 		ArrayList<Member> pendingMembers;
 		ArrayList<Task> tasksAvailable;
+		ArrayList<Task> tasksBeingDone;
+		ArrayList<Task> tasksDone;
 		ArrayList<Service> services;
 		ArrayList<Reduction> reductions;
 		private final int password;
+		private ArrayList<Task> taskDoneHistory;
 	
 	public Network (Admin admin, String name ) {
 		this.password = 100000 + (int)(Math.random() * ((999999 - 100000) + 1));
@@ -18,17 +21,48 @@ import java.util.ArrayList;
 		this.addMember(admin, this.password); // Un admin est également un membre.
 		this.admin = admin;
 		this.tasksAvailable = new ArrayList<Task>();
+		this.tasksBeingDone = new ArrayList<Task>();
+		this.tasksDone = new ArrayList<Task>();
 		this.pendingMembers = new ArrayList<Member>();
 		this.services = new ArrayList<Service>();
 		this.reductions = new ArrayList<Reduction>();
+		this.taskDoneHistory = new ArrayList<Task>();
 		reductions.add(new Reduction("default", 1));
 		// créé un mot de passe aléatoire, puis le communique à l'admin.
 		admin.setNetworkPassword(this.password);
 		
 		
  }
+	
+	public void setTaskDone(Task t) {
+		this.tasksDone.add(t);
+		this.tasksBeingDone.remove(t);
+		t.setAdminValidate();
+	}
+	
+	public void setTaskBeingDone(Task t) {
+		this.tasksBeingDone.add(t);
+		this.tasksAvailable.remove(t);
+	}
+	
 	public String getNetworkName() {
 		return this.name;
+	}
+	
+	public boolean equals(Network n) {
+		return this.name.equals(n.getNetworkName());
+	}
+	
+	public boolean isTaskAvailable(Task t) {
+		
+		for(Task t2 : this.tasksAvailable) {
+			if (t2.getName().equals(t.getName())) return true;
+		}
+		return false;
+	}
+	
+	public void deleteTaskAvailable(Task t) {
+		this.tasksAvailable.remove(t);
 	}
 	
 	/**
@@ -120,6 +154,29 @@ import java.util.ArrayList;
 		// TODO Auto-generated method stub
 		if(this.password == networkPassword) this.reductions.remove(s);
 		
+	}
+
+	public ArrayList<Task> getPendingTasks() {
+		// TODO Auto-generated method stub
+		return this.tasksBeingDone;
+	}
+
+	public boolean isPendingTask(Task t) {
+		
+		// TODO Auto-generated method stub
+		for (Task t2 : this.tasksBeingDone) {
+			if (t2.getName().equals(t.getName())) return true;
+		}
+		return false;
+	}
+	
+	public void removePendingTask(Task t) {
+		this.tasksBeingDone.remove(t);
+	}
+
+	public void addTaskHistory(Task task) {
+		// TODO Auto-generated method stub
+		this.taskDoneHistory.add(task);
 	}
 }
 

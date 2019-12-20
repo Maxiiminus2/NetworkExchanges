@@ -22,6 +22,9 @@ public class Window extends JFrame {
 	public MemberServicesManagementPanel msmPanel;
 	public CreateTaskPanel createTaskPanel;
 	public EditProfilePanel editProfilePanel;
+	public BeneficiaryTasksPanel benefeciaryTasksPanel;
+	public TasksToDoPanel tasksToDoPanel;
+	public PendingTasksPanel pendingTasksPanel;
 	
 	private Network networkSelected = null;
 	private Member connectedUser = null;
@@ -48,6 +51,9 @@ public class Window extends JFrame {
 		this.msmPanel = new MemberServicesManagementPanel(this);
 		this.createTaskPanel = new CreateTaskPanel(this);
 		this.editProfilePanel = new EditProfilePanel(this);
+		this.benefeciaryTasksPanel = new BeneficiaryTasksPanel(this);
+		this.tasksToDoPanel = new TasksToDoPanel(this);
+		this.pendingTasksPanel = new PendingTasksPanel(this);
 		
 		this.members = new ArrayList<Member>();
 		
@@ -78,6 +84,10 @@ public class Window extends JFrame {
 		else if (pan.equals("PMS")) this.setContentPane(this.msmPanel);
 		else if (pan.equals("CT")) this.setContentPane(this.createTaskPanel);
 		else if (pan.equals("EP")) this.setContentPane(this.editProfilePanel);
+		else if (pan.equals("BT")) this.setContentPane(this.benefeciaryTasksPanel);
+		else if (pan.equals("TP")) this.setContentPane(this.tasksToDoPanel);
+		else if (pan.equals("PT")) this.setContentPane(this.pendingTasksPanel);
+		
 		this.revalidate();
 		this.repaint();
 		
@@ -106,6 +116,9 @@ public class Window extends JFrame {
 		this.msmPanel = new MemberServicesManagementPanel(this);
 		this.createTaskPanel = new CreateTaskPanel(this);
 		this.editProfilePanel = new EditProfilePanel(this);
+		this.benefeciaryTasksPanel = new BeneficiaryTasksPanel(this);
+		this.tasksToDoPanel = new TasksToDoPanel(this);
+		this.pendingTasksPanel = new PendingTasksPanel(this);
 
 	}
 

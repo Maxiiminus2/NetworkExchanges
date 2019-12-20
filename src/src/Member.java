@@ -2,6 +2,7 @@ package src;
 import java.awt.Component;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Member {
@@ -11,6 +12,7 @@ public class Member {
 	private ArrayList<Task> tasksSubscribed;
 	private ArrayList<Task> tasksToDo;
 	private ArrayList<Task> tasksBeneficiary;
+
 	private Reduction reduction;
 	private String password;
 
@@ -19,6 +21,7 @@ public class Member {
 		this.tasksToDo = new ArrayList<Task>();
 		this.tasksBeneficiary = new ArrayList<Task>();
 		this.tasksSubscribed = new ArrayList<Task>();
+	
 		this.username = username ;
 		this.wallet = wallet;
 		this.reduction = reduction;
@@ -78,6 +81,31 @@ public class Member {
 		this.wallet += amount;
 	}
 	
+	public void removeBeneficiaryTask(Task t) {
+		this.tasksBeneficiary.remove(t);
+		for(int i = 0 ; i < t.getContributorsNb() ; i++){
+			Member m = t.getContributorsArray()[i];
+			if(t.getStatus().equals("Being done")) {
+				m.removeTaskToDo(t);
+			} else if(t.getStatus().equals("Waiting for contributors")) {
+				m.removeSubscribedTask(t);
+			}
+		}
+	}
+	
+	public void removeSubscribedTask(Task t) {
+		this.tasksSubscribed.remove(t);
+	}
+	
+	public void removeTaskToDo(Task t) {
+		this.tasksToDo.remove(t);
+	}
+	
+	public void validateTask(Task t) {
+		t.setTaskToDo(this);
+	}
+	
+	
 	/**
 	 * Permet de retirer de l'argent du wallet
 	 * 
@@ -111,7 +139,7 @@ public class Member {
 	
 	public void setTaskDone(Task t, int hoursSpent) throws MemberException {
 		if(t.getBeneficiary().equals(this)) {
-			t.setTaskDone(this, hoursSpent);
+			t.setTaskDone(this);
 		} else {
 			throw new MemberException("Vous n'êtes pas autorisé à valider cette tâche !");
 		}
@@ -174,7 +202,7 @@ public class Member {
 	 * @param service
 	 */
 	public void addTask(Network n, String name, int contributorsRequiredNb, boolean isVolontary, Service service, int estimatedHours) {
-		Task newTask = new Task(name, contributorsRequiredNb, this, isVolontary, service, estimatedHours);
+		Task newTask = new Task(name, contributorsRequiredNb, this, isVolontary, service, estimatedHours, n);
 		n.addTask(newTask);
 		this.addTaskBeneficiary(newTask);
 	}
@@ -221,6 +249,52 @@ public class Member {
 	public void setUsername(String newUsername) {
 		// TODO Auto-generated method stub
 		this.username = newUsername;
+	}
+
+	public int getBeneficiaryTaskNb(Network selectedNetwork) {
+		// TODO Auto-generated method stub
+		int nb = 0;
+		for (Task t : this.getTasksBeneficiary()) {
+			if(t.getNetwork().equals(selectedNetwork)) nb++;
+		}
+		return nb++;
+	}
+
+	public ArrayList<Task> getBeneficiaryTasksByNetwork(Network selectedNetwork) {
+		// TODO Auto-generated method stub
+		ArrayList<Task> result = new ArrayList<Task>();
+		
+		for (Task t : this.tasksBeneficiary) {
+			if (t.getNetwork().equals(selectedNetwork)) result.add(t);
+		}
+		
+		return result;
+	}
+
+	public Task getBeneficiaryTask(String taskName) {
+		
+		for (Task t : this.getTasksBeneficiary()) {
+			if (t.getName().equals(taskName)) return t;
+		}
+		return null;
+	}
+
+
+	public ArrayList<Task> getTasksSubscribed() {
+		// TODO Auto-generated method stub
+		return this.tasksSubscribed;
+	}
+
+	public ArrayList<Task> getTasksToDo() {
+		// TODO Auto-generated method stub
+		return this.tasksToDo;
+	}
+
+	public void setHoursSpent(int nb, Task t) {
+		// TODO Auto-generated method stub
+		if(this.getName().equals(t.getBeneficiary().getName())){
+			t.setHoursSpent(nb);
+		}
 	}
 	
 
