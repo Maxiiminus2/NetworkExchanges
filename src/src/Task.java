@@ -39,11 +39,6 @@ public class Task {
 		return this.name.equals(t.name);
 	}
 	
-	public String toString() {
-		String result = this.service.name + " : " + this.name + "\n" + this.contributorsNb + "/" + this.contributorsRequiredNb + " contributeurs.";
-		return result;
-	}
-	
 	/**
 	 * Ajoute un contributeur à une tâche.
 	 * @param m
@@ -149,6 +144,10 @@ public class Task {
 		}
 	}
 	
+	/**
+	 * Retourne le prix estimé de la tâche.
+	 * @return
+	 */
 	public int getEstimatedBeneficiaryPrice() {
 		if  (this.isVolontary()) return 0;
 		else {
@@ -167,7 +166,9 @@ public class Task {
 	 */
 	public void payContributors(Member benef) throws MemberException {
 		if (benef.equals(this.beneficiary)) {
+			// Montant que doit payer le bénéficiaire.
 			int amountPerContributor = (int) ( this.service.hourlyCost * this.hoursSpent);
+			// Montant manquant que l'entreprise paye.
 			int amountPerContributorLeft = (int) (amountPerContributor - amountPerContributor * benef.getReductionValue());
 			for (Member c : contributors) {
 				benef.sendMoney( (int)(amountPerContributor * benef.getReductionValue()), c);
@@ -209,9 +210,11 @@ public class Task {
 			
 			m.removeSubscribedTask(this);
 			
+			// On déplace tous les contributeurs de une case vers la gauche depuis celui qu'on supprime
 			for (int i = cIndex ; i < this.contributorsNb ; i++) {
 				if (i < this.contributorsRequiredNb - 1) this.contributors[i] = this.contributors[i+1];
 			}
+			// Le dernier apparaît deux fois, on le supprime.
 			this.contributors[this.contributorsNb-1] = null;
 		} else {
 			System.out.println("Ne participe pas à la tâche");
@@ -220,6 +223,11 @@ public class Task {
 		this.contributorsNb--;
 	}
 	
+	/**
+	 * Retourne l'index du membrer m dans la liste des contributeurs.
+	 * @param m
+	 * @return
+	 */
 	private int getContributorIndex(Member m) {
 		for (int i = 0 ; i < this.contributorsRequiredNb ; i++) {
 			Member c = this.contributors[i]; 

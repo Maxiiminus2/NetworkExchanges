@@ -2,19 +2,19 @@ package src;
 import java.util.ArrayList;
 
 	public class Network {
-		String name ;
-		Admin admin;
-		ArrayList<Member> member;
-		ArrayList<Member> pendingMembers;
-		ArrayList<Task> allTasks;
-		ArrayList<Task> tasksAvailable;
-		ArrayList<Task> tasksBeingDone;
-		ArrayList<Task> tasksDone;
-		ArrayList<Service> services;
-		ArrayList<Reduction> reductions;
+		private String name ;
+		private Admin admin;
+		private ArrayList<Member> member;
+		private ArrayList<Member> pendingMembers;
+		private ArrayList<Task> allTasks; // toutes les tâches depuis la création du réseau.
+		private ArrayList<Task> tasksAvailable; // Tâche ou l'on peut s'inscrire pour y prendre part
+		private ArrayList<Task> tasksBeingDone; // Tâche en cours de réalisation
+		private ArrayList<Task> tasksDone; // Tâche en attente de paiement.
+		private ArrayList<Service> services;
+		private ArrayList<Reduction> reductions;
 		private final int password;
 		private final Reduction defaultReduction;
-		private ArrayList<Task> taskDoneHistory;
+		private ArrayList<Task> taskDoneHistory; // Tâche finies.
 	
 	public Network (Admin admin, String name ) {
 		this.password = 100000 + (int)(Math.random() * ((999999 - 100000) + 1));
@@ -27,7 +27,7 @@ import java.util.ArrayList;
 		this.tasksDone = new ArrayList<Task>();
 		this.pendingMembers = new ArrayList<Member>();
 		this.services = new ArrayList<Service>();
-		this.defaultReduction = new Reduction("default", 1.0);
+		this.defaultReduction = new Reduction("default", 1.0); // Par défaut un membre n'a pas de réduction
 		this.reductions = new ArrayList<Reduction>();
 		this.taskDoneHistory = new ArrayList<Task>();
 		this.allTasks = new ArrayList<Task>();
@@ -120,16 +120,6 @@ import java.util.ArrayList;
 		return this.tasksAvailable;
 	}
 	
-	public String toStringAvailableTasks() {
-		String result = "";
-		int nbTask = 1;
-		for (Task t : this.tasksAvailable) {
-			result += "Tâche #" + nbTask + "\n";
-			nbTask++;
-			result += t.toString() + "\n" + "\n";
-		}
-		return result;
-	}
 	
 	public ArrayList<Member> getNetworkMembers(){
 		return this.member;
@@ -151,10 +141,22 @@ import java.util.ArrayList;
 	public ArrayList<Reduction> getReductions(){
 		return this.reductions;
 	}
+	
+	/***
+	 * Ajoute une classe sociale s au réseau.
+	 * @param s
+	 * @param networkPassword
+	 */
 	public void addReduction(Reduction s, int networkPassword) {
 		// TODO Auto-generated method stub
 		if(this.password == networkPassword) this.reductions.add(s);
 	}
+	
+	/**
+	 * Supprimer une classe sociale d'un réseau.
+	 * @param s
+	 * @param networkPassword
+	 */
 	public void removeReduction(Reduction s, int networkPassword) {
 		// TODO Auto-generated method stub
 		if(this.password == networkPassword) {
@@ -166,6 +168,10 @@ import java.util.ArrayList;
 		
 	}
 
+	/**
+	 * Retourne les tâches en attente de validation.
+	 * @return
+	 */
 	public ArrayList<Task> getPendingTasks() {
 		// TODO Auto-generated method stub
 		return this.tasksBeingDone;

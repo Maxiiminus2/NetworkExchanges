@@ -9,7 +9,11 @@ public class Admin extends Member {
 		super(name, wallet, password);
 	}
 	
-	
+	/**
+	 * Créé un réseau de nom n
+	 * @param n
+	 * @return
+	 */
 	public Network createNetwork (String n) {
 		return new Network(this, n);
 	}
@@ -45,11 +49,5 @@ public class Admin extends Member {
 		// TODO Auto-generated method stub
 		n.removeReduction(s, this.networkPassword);
 	 }
-	 
-	 /* public boolean validTask(Task t) {
-	  * 	if(t.isDone()) return true;
-	  * }
-	  * 
-	  */
 	 
 }
