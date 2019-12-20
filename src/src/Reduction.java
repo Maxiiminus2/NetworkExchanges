@@ -12,4 +12,8 @@ package src;
 	public double getReductionValue() {
 		return this.reduction;
 	}
+	public String getName() {
+		// TODO Auto-generated method stub
+		return this.nameReduction;
+	}
 }

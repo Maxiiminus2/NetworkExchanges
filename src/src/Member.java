@@ -1,4 +1,5 @@
 package src;
+import java.awt.Component;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -31,7 +32,7 @@ public class Member {
 		this.tasksSubscribed = new ArrayList<Task>();
 		this.username = username ;
 		this.wallet = wallet;
-		this.reduction = null;
+		this.reduction = new Reduction("default", 1.0);
 		this.password = password;
 	}
 	
@@ -172,8 +173,8 @@ public class Member {
 	 * @param isVolontary
 	 * @param service
 	 */
-	public void addTask(Network n, String name, int contributorsRequiredNb, boolean isVolontary, Service service) {
-		Task newTask = new Task(name, contributorsRequiredNb, this, isVolontary, service);
+	public void addTask(Network n, String name, int contributorsRequiredNb, boolean isVolontary, Service service, int estimatedHours) {
+		Task newTask = new Task(name, contributorsRequiredNb, this, isVolontary, service, estimatedHours);
 		n.addTask(newTask);
 		this.addTaskBeneficiary(newTask);
 	}
@@ -198,6 +199,17 @@ public class Member {
 	public String getPassword() {
 		// TODO Auto-generated method stub
 		return this.password;
+	}
+
+	public ArrayList<Service> getServices() {
+		// TODO Auto-generated method stub
+		return this.services;
+	}
+
+	public void removeService(Service service) {
+		// TODO Auto-generated method stub
+		this.services.remove(service);
+		
 	}
 	
 

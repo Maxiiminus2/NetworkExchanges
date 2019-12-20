@@ -19,5 +19,9 @@ public class Service {
 		return this.name;
 	}
 	
+	public boolean equals(Service s) {
+		return s.getName().equals(this.getName());
+	}
+	
 	
 }

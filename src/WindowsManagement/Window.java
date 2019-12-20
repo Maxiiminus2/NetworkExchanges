@@ -17,6 +17,10 @@ public class Window extends JFrame {
 	public DefaultMemberDisplayPanel dmdPanel;
 	public PendingMembersPanel pendingMembersPanel;
 	public ManageServicesPanel manageServicesPanel;
+	public ManageReductionsPanel manageReductionsPanel;
+	public RemoveMembersPanel removeMembersPanel;
+	public MemberServicesManagementPanel msmPanel;
+	public CreateTaskPanel createTaskPanel;
 	
 	private Network networkSelected = null;
 	private Member connectedUser = null;
@@ -37,6 +41,10 @@ public class Window extends JFrame {
 		this.dmdPanel = new DefaultMemberDisplayPanel(this);
 		this.pendingMembersPanel = new PendingMembersPanel(this);
 		this.manageServicesPanel = new ManageServicesPanel(this);
+		this.manageReductionsPanel = new ManageReductionsPanel(this);
+		this.removeMembersPanel = new RemoveMembersPanel(this);
+		this.msmPanel = new MemberServicesManagementPanel(this);
+		this.createTaskPanel = new CreateTaskPanel(this);
 		
 		this.members = new ArrayList<Member>();
 		
@@ -60,8 +68,12 @@ public class Window extends JFrame {
 		else if (pan.equals("Connexion")) this.setContentPane(this.connectPanel);
 		else if (pan.equals("CN")) this.setContentPane(this.cnPanel);
 		else if (pan.equals("DMD")) this.setContentPane(this.dmdPanel);
-		else if (pan.contentEquals("PM")) this.setContentPane(this.pendingMembersPanel);
-		else if (pan.contentEquals("MS")) this.setContentPane(this.manageServicesPanel);
+		else if (pan.equals("PM")) this.setContentPane(this.pendingMembersPanel);
+		else if (pan.equals("MS")) this.setContentPane(this.manageServicesPanel);
+		else if (pan.equals("MR")) this.setContentPane(this.manageReductionsPanel);
+		else if (pan.equals("RM")) this.setContentPane(this.removeMembersPanel);
+		else if (pan.equals("PMS")) this.setContentPane(this.msmPanel);
+		else if (pan.equals("CT")) this.setContentPane(createTaskPanel);
 		this.revalidate();
 		this.repaint();
 		
@@ -85,6 +97,11 @@ public class Window extends JFrame {
 		this.dmdPanel = new DefaultMemberDisplayPanel(this);
 		this.pendingMembersPanel = new PendingMembersPanel(this);
 		this.manageServicesPanel = new ManageServicesPanel(this);
+		this.manageReductionsPanel = new ManageReductionsPanel(this);
+		this.removeMembersPanel = new RemoveMembersPanel(this);
+		this.msmPanel = new MemberServicesManagementPanel(this);
+		this.createTaskPanel = new CreateTaskPanel(this);
+
 	}
 
 	public ArrayList<Member> getMembers() {
@@ -122,6 +139,11 @@ public class Window extends JFrame {
 	
 	public Member getConnectedUser() {
 		return this.connectedUser;
+	}
+
+	public void removeMember(Member member) {
+		// TODO Auto-generated method stub
+		this.networkSelected.getAdmin().removeMember(this.networkSelected, member);
 	}
 	
 }

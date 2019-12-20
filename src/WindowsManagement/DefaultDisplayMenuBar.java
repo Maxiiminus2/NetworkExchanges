@@ -21,10 +21,12 @@ public class DefaultDisplayMenuBar extends JMenuBar {
 		JMenuItem depositMoney = new JMenuItem("Deposit money");
 		JMenuItem withdrawMoney = new JMenuItem("Withdraw money");
 		JMenuItem editProfile = new JMenuItem("Edit profile");
+		JMenuItem manageServices = new JMenuItem("Manage services");
 		profile.add(depositMoney);
 		profile.add(withdrawMoney);
 		profile.addSeparator();
 		profile.add(editProfile);
+		profile.add(manageServices);
 		
 		JMenu network = new JMenu("Network");
 		JMenuItem tasksToDo = new JMenuItem("Tasks to do");
@@ -35,6 +37,30 @@ public class DefaultDisplayMenuBar extends JMenuBar {
 		network.add(tasksBeneficiary);
 		network.add(createTask);
 		network.add(availableTasks);
+		
+		availableTasks.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				setPanel("DMD"); 
+			}
+		});
+		
+		manageServices.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				setPanel("PMS");
+			}
+		});
+		
+		createTask.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				setPanel("CT");
+			}
+		});
 		
 		
 		
@@ -77,6 +103,26 @@ public class DefaultDisplayMenuBar extends JMenuBar {
 					setPanel("MS");
 				}
 			});
+			
+			adminManageReductions.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					setPanel("MR");
+				}
+			});
+			
+			adminRemoveMember.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					setPanel("RM");
+				}
+			});
+			
+			
+			
+			
 		}
 		
 		this.add(Box.createHorizontalStrut(650));

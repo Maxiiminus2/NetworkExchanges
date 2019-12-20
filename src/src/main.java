@@ -18,8 +18,8 @@ public class main {
 		lea.addService(jardinage);
 		
 	
-		Pierre.addTask(network, "Mes couilles sur ton front", 2, false, jardinage);
-		lea.addTask(network, "Tâche test", 4, true, bricolage);
+		Pierre.addTask(network, "Mes couilles sur ton front", 2, false, jardinage, 10);
+		lea.addTask(network, "Tâche test", 4, true, bricolage, 15);
 		try {
 			network.getTasks().get(0).addContributor(Jean);
 			network.getTasks().get(0).addContributor(lea);

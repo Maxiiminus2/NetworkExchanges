@@ -1,5 +1,6 @@
 package src;
 
+import java.awt.Component;
 import java.util.Map;
 
 public class Task {
@@ -12,11 +13,12 @@ public class Task {
 	private boolean isVolontary;
 	private boolean isDone;
 	private int hoursSpent;
+	private int estimatedHoursNeeded;
 	private Service service;
 	
 	// private Map<Member, Boolean> done;
 	
-	public Task(String name, int contributorsRequiredNb, Member beneficiary, boolean isVolontary, Service service) {
+	public Task(String name,  int contributorsRequiredNb, Member beneficiary, boolean isVolontary, Service service, int estimatedHours) {
 		this.contributorsRequiredNb = contributorsRequiredNb;
 		this.name = name;
 		this.contributorsNb = 0;
@@ -26,6 +28,7 @@ public class Task {
 		this.isDone = false;
 		this.service = service;
 		this.hoursSpent = 0;
+		this.estimatedHoursNeeded = estimatedHours;
 	}
 	
 	public boolean equals(Task t) {
@@ -44,10 +47,19 @@ public class Task {
 	 */
 	public void addContributor(Member m) throws TaskException{
 		if (this.contributorsNb < this.contributorsRequiredNb) {
-			if (m.canDo(this.service) && !m.equals(this.beneficiary) && !m.isSubscribedToTask(this)) {
-				this.contributors[contributorsNb] = m;
-				this.contributorsNb++;
-				m.addTaskSubscribed(this);
+			if (m.canDo(this.service)) {
+				if (!m.equals(this.beneficiary)) {
+					if (!m.isSubscribedToTask(this)) {
+						this.contributors[contributorsNb] = m;
+						this.contributorsNb++;
+						m.addTaskSubscribed(this);
+					} else {
+						throw new TaskException("Vous participez déjà à la tâche !");
+					}
+				} else {
+					throw new TaskException("Vous êtes le bénéficiaire de cette tâche !");
+				}
+				
 			} else {
 				throw new TaskException("Ce membre n'est pas qualifié pour réaliser cette tâche !");
 			}
@@ -145,5 +157,20 @@ public class Task {
 				if (benef.getReductionValue() != 1) c.receiveMoney(amountPerContributorLeft);
 			}
 		}
+	}
+
+	public String getName() {
+		// TODO Auto-generated method stub
+		return this.name;
+	}
+
+	public Service getService() {
+		// TODO Auto-generated method stub
+		return this.service;
+	}
+
+	public double getEstimatedHours() {
+		// TODO Auto-generated method stub
+		return this.estimatedHoursNeeded;
 	}
 }
