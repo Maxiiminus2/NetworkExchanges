@@ -21,6 +21,7 @@ public class Window extends JFrame {
 	public RemoveMembersPanel removeMembersPanel;
 	public MemberServicesManagementPanel msmPanel;
 	public CreateTaskPanel createTaskPanel;
+	public EditProfilePanel editProfilePanel;
 	
 	private Network networkSelected = null;
 	private Member connectedUser = null;
@@ -35,6 +36,7 @@ public class Window extends JFrame {
 		
 		this.setSize(1080,720);
 		this.setTitle("Network exchanges");
+		this.setResizable(false);
 		this.connectPanel = new ConnectingPanel(this.networksAvailable, this);
 		this.regPanel = new RegisterPanel(this);
 		this.cnPanel = new CreateNetworkPanel(this);
@@ -45,6 +47,7 @@ public class Window extends JFrame {
 		this.removeMembersPanel = new RemoveMembersPanel(this);
 		this.msmPanel = new MemberServicesManagementPanel(this);
 		this.createTaskPanel = new CreateTaskPanel(this);
+		this.editProfilePanel = new EditProfilePanel(this);
 		
 		this.members = new ArrayList<Member>();
 		
@@ -73,7 +76,8 @@ public class Window extends JFrame {
 		else if (pan.equals("MR")) this.setContentPane(this.manageReductionsPanel);
 		else if (pan.equals("RM")) this.setContentPane(this.removeMembersPanel);
 		else if (pan.equals("PMS")) this.setContentPane(this.msmPanel);
-		else if (pan.equals("CT")) this.setContentPane(createTaskPanel);
+		else if (pan.equals("CT")) this.setContentPane(this.createTaskPanel);
+		else if (pan.equals("EP")) this.setContentPane(this.editProfilePanel);
 		this.revalidate();
 		this.repaint();
 		
@@ -101,6 +105,7 @@ public class Window extends JFrame {
 		this.removeMembersPanel = new RemoveMembersPanel(this);
 		this.msmPanel = new MemberServicesManagementPanel(this);
 		this.createTaskPanel = new CreateTaskPanel(this);
+		this.editProfilePanel = new EditProfilePanel(this);
 
 	}
 

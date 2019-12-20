@@ -28,6 +28,45 @@ public class DefaultDisplayMenuBar extends JMenuBar {
 		profile.add(editProfile);
 		profile.add(manageServices);
 		
+		JLabel wallet = new JLabel("Wallet : " + this.connectedUser.getWallet() + " tokens");
+
+		
+		depositMoney.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String amount = JOptionPane.showInputDialog("Deposit amount : ");
+				if (isInteger(amount) && Integer.parseInt(amount) >= 0) {
+					deposit(Integer.parseInt(amount));
+					// On aurait 
+					wallet.setText("Wallet : " + m.getWallet() + " tokens");
+				}
+				
+			}
+			
+		});
+		
+		withdrawMoney.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String amount = JOptionPane.showInputDialog("Withdrawal amount : ");
+				if (isInteger(amount) && Integer.parseInt(amount) >= 0) {
+					withdraw(Integer.parseInt(amount));
+					wallet.setText("Wallet : " + m.getWallet() + " tokens");
+				}
+			}
+		});
+		
+		editProfile.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				setPanel("EP");
+			}
+			
+		});
+		
 		JMenu network = new JMenu("Network");
 		JMenuItem tasksToDo = new JMenuItem("Tasks to do");
 		JMenuItem tasksBeneficiary = new JMenuItem("Tasks beneficiary");
@@ -127,7 +166,6 @@ public class DefaultDisplayMenuBar extends JMenuBar {
 		
 		this.add(Box.createHorizontalStrut(650));
 		
-		JLabel wallet = new JLabel("Wallet : " + this.connectedUser.getWallet() + " tokens");
 		this.add(wallet);
 		
 		this.add(Box.createHorizontalStrut(10));
@@ -152,6 +190,20 @@ public class DefaultDisplayMenuBar extends JMenuBar {
 
 	}
 
+	public void withdraw(int amount) {
+		// TODO Auto-generated method stub
+		try {
+			this.container.getConnectedUser().withdrawMoney(amount);
+		} catch (MemberException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void deposit(int amount) {
+		// TODO Auto-generated method stub
+		this.container.getConnectedUser().depositMoney(amount);
+	}
+
 	public void setPanel(String panel) {
 		// TODO Auto-generated method stub
 		this.container.changePanel(panel);
@@ -166,5 +218,14 @@ public class DefaultDisplayMenuBar extends JMenuBar {
 		this.container.disconnectUserAndNetwork();
 		this.container.setJMenuBar(null);
 		this.setConnexionPanel();
+	}
+	
+	public boolean isInteger(String s) {
+		try {
+			Integer.parseInt(s);
+		} catch (NumberFormatException e) {
+			return false;
+		}
+		return true;
 	}
 }

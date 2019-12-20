@@ -211,6 +211,17 @@ public class Member {
 		this.services.remove(service);
 		
 	}
+
+	public void setPassword(String newPassword) {
+		// TODO Auto-generated method stub
+		this.password = newPassword;
+		
+	}
+
+	public void setUsername(String newUsername) {
+		// TODO Auto-generated method stub
+		this.username = newUsername;
+	}
 	
 
 	

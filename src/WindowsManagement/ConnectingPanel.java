@@ -25,7 +25,13 @@ public class ConnectingPanel extends JPanel {
 		JLabel usernameLabel = new JLabel("Username : ");
 		JPasswordField password = new JPasswordField(10);
 		JLabel passwordLabel = new JLabel("Password : ");
-		JComboBox networkList = new JComboBox(networksAvailable.toArray());
+		
+		String[] networkNameList = new String[networksAvailable.size()];
+		for (int i = 0 ; i < networksAvailable.size() ; i++) {
+			networkNameList[i] = networksAvailable.get(i).getNetworkName();
+		}
+		
+		JComboBox networkList = new JComboBox(networkNameList);
 		JLabel networkListLabel = new JLabel("Network : ");
 		
 		//Layout de saisie
@@ -59,15 +65,15 @@ public class ConnectingPanel extends JPanel {
 				// Utiliser une méthode checkPassword dans Member à la place.
 				if(passwordCorrect(username.getText(), password.getText())) {
 					System.out.println("GOOD");
-					if (isNetworkMember(username.getText(), (Network) networkList.getSelectedItem())) {
-						setConnectedUserAndNetwork(username.getText(), networkList.getSelectedItem());
+					if (isNetworkMember(username.getText(), (Network) networksAvailable.get(networkList.getSelectedIndex()))) {
+						setConnectedUserAndNetwork(username.getText(), (Network) networksAvailable.get(networkList.getSelectedIndex()));
 						setDefaultMemberDisplayPanel();
 					} else {
 						System.out.println("Membre absent.");
-						if(isMemberPending(username.getText(), (Network) networkList.getSelectedItem())) {
+						if(isMemberPending(username.getText(), (Network) networksAvailable.get(networkList.getSelectedIndex()))) {
 							System.out.println("Votre demande d'adhésion est toujours en attente.");
 						} else {
-							addPendingMember(username.getText(), (Network) networkList.getSelectedItem());
+							addPendingMember(username.getText(),(Network) networksAvailable.get(networkList.getSelectedIndex()));
 							System.out.println("Votre demande d'adhésion a bien été prise en compte.");
 						}
 						// Ajoute le membre dans la liste d'attente.

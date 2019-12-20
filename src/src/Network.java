@@ -56,6 +56,10 @@ import java.util.ArrayList;
 		return this.admin;
 	}
 	
+	public boolean isAdmin(Member m) {
+		return this.admin.getName().equals(m.getName());
+	}
+	
 	/**
 	 * Retire un membre du réseau.
 	 * @param m
