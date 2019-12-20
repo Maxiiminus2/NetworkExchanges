@@ -26,6 +26,16 @@ public class Admin extends Member {
 		 this.networkPassword = password;
 	 }
 	 
+	 public void addService(Network n, Service s) {
+		 n.addService(s, this.networkPassword);
+	 }
+
+
+	public void removeService(Network n, Service s) {
+		// TODO Auto-generated method stub
+		n.removeService(s, this.networkPassword);
+	}
+	 
 	 /* public boolean validTask(Task t) {
 	  * 	if(t.isDone()) return true;
 	  * }

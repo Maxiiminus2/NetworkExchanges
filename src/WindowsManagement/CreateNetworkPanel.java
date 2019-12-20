@@ -37,7 +37,7 @@ public class CreateNetworkPanel extends JPanel {
 		panelSaisie.add(networkNameLabel);
 		panelSaisie.add(networkName);
 				
-		JButton createNetworkButton = new JButton("CreateNetwork");
+		JButton createNetworkButton = new JButton("Create network");
 		
 		
 		createNetworkButton.addActionListener(new ActionListener() {

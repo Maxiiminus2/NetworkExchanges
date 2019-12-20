@@ -15,6 +15,8 @@ public class Window extends JFrame {
 	public RegisterPanel regPanel;
 	public CreateNetworkPanel cnPanel;
 	public DefaultMemberDisplayPanel dmdPanel;
+	public PendingMembersPanel pendingMembersPanel;
+	public ManageServicesPanel manageServicesPanel;
 	
 	private Network networkSelected = null;
 	private Member connectedUser = null;
@@ -26,10 +28,15 @@ public class Window extends JFrame {
 		// CODE FINAL 
 
 		//networksAvailable.add(new Network(new Admin("Bidule", 100), "network"));
+		
+		this.setSize(1080,720);
+		this.setTitle("Network exchanges");
 		this.connectPanel = new ConnectingPanel(this.networksAvailable, this);
 		this.regPanel = new RegisterPanel(this);
 		this.cnPanel = new CreateNetworkPanel(this);
 		this.dmdPanel = new DefaultMemberDisplayPanel(this);
+		this.pendingMembersPanel = new PendingMembersPanel(this);
+		this.manageServicesPanel = new ManageServicesPanel(this);
 		
 		this.members = new ArrayList<Member>();
 		
@@ -53,6 +60,8 @@ public class Window extends JFrame {
 		else if (pan.equals("Connexion")) this.setContentPane(this.connectPanel);
 		else if (pan.equals("CN")) this.setContentPane(this.cnPanel);
 		else if (pan.equals("DMD")) this.setContentPane(this.dmdPanel);
+		else if (pan.contentEquals("PM")) this.setContentPane(this.pendingMembersPanel);
+		else if (pan.contentEquals("MS")) this.setContentPane(this.manageServicesPanel);
 		this.revalidate();
 		this.repaint();
 		
@@ -66,11 +75,16 @@ public class Window extends JFrame {
 		this.members.add(m);
 	}
 	
+	/** Mets à jour les panels avec les nouvelles données.
+	 * 
+	 */
 	public void updatePanels() {
 		this.connectPanel = new ConnectingPanel(this.networksAvailable, this);
 		this.regPanel = new RegisterPanel(this);
 		this.cnPanel = new CreateNetworkPanel(this);
 		this.dmdPanel = new DefaultMemberDisplayPanel(this);
+		this.pendingMembersPanel = new PendingMembersPanel(this);
+		this.manageServicesPanel = new ManageServicesPanel(this);
 	}
 
 	public ArrayList<Member> getMembers() {

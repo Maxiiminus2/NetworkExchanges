@@ -7,6 +7,7 @@ import java.util.ArrayList;
 		ArrayList<Member> member;
 		ArrayList<Member> pendingMembers;
 		ArrayList<Task> tasksAvailable;
+		ArrayList<Service> services;
 		private final int password;
 	
 	public Network (Admin admin, String name ) {
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 		this.admin = admin;
 		this.tasksAvailable = new ArrayList<Task>();
 		this.pendingMembers = new ArrayList<Member>();
+		this.services = new ArrayList<Service>();
 		// créé un mot de passe aléatoire, puis le communique à l'admin.
 		admin.setNetworkPassword(this.password);
 		
@@ -84,6 +86,19 @@ import java.util.ArrayList;
 	
 	public ArrayList<Member> getNetworkMembers(){
 		return this.member;
+	}
+	
+	public ArrayList<Service> getServices(){
+		return this.services;
+	}
+	public void addService(Service s, int networkPassword) {
+		// TODO Auto-generated method stub
+		if(this.password == networkPassword) this.services.add(s);
+	}
+	public void removeService(Service s, int networkPassword) {
+		// TODO Auto-generated method stub
+		if(this.password == networkPassword) this.services.remove(s);
+		
 	}
 	
 }
