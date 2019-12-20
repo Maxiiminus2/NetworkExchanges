@@ -73,7 +73,14 @@ public class RemoveMembersPanel extends JPanel {
 	
 	public void removeMember(Member member) {
 		// TODO Auto-generated method stub
-		this.container.removeMember(member);
+		if (!(member.hasTasks())) {
+			this.container.removeMember(member);
+
+		} else {
+			//Affichage.
+			JOptionPane affichage = new JOptionPane();
+			affichage.showMessageDialog(null, "Ce membre a des tâches en cours, il ne peut pas être supprimé", "Warning", JOptionPane.WARNING_MESSAGE);
+		}
 	}
 
 	

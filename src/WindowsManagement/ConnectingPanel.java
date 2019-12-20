@@ -72,14 +72,20 @@ public class ConnectingPanel extends JPanel {
 						System.out.println("Membre absent.");
 						if(isMemberPending(username.getText(), (Network) networksAvailable.get(networkList.getSelectedIndex()))) {
 							System.out.println("Votre demande d'adhésion est toujours en attente.");
+							JOptionPane affichage = new JOptionPane();
+							affichage.showMessageDialog(null, "Demande d'adhésion en attente", "Information", JOptionPane.INFORMATION_MESSAGE);
 						} else {
 							addPendingMember(username.getText(),(Network) networksAvailable.get(networkList.getSelectedIndex()));
 							System.out.println("Votre demande d'adhésion a bien été prise en compte.");
+							JOptionPane affichage = new JOptionPane();
+							affichage.showMessageDialog(null, "Demande d'adhésion envoyée à l'administrateur", "Information", JOptionPane.INFORMATION_MESSAGE);
 						}
 						// Ajoute le membre dans la liste d'attente.
 					}	
 				} else {
-					System.out.println("WRONG");
+					JOptionPane affichage = new JOptionPane();
+					affichage.showMessageDialog(null, "Wrong password", "Warning", JOptionPane.WARNING_MESSAGE);
+
 				}
 			}
 		});
@@ -160,7 +166,7 @@ public class ConnectingPanel extends JPanel {
 	}
 	
 	public boolean passwordCorrect(String username, String password) {
-		return this.container.passwordCorrect(username, password);
+		return this.getMember(username).checkPassword(password);
 	}
 	
 	private void setConnectedUserAndNetwork(String username, Object network) {

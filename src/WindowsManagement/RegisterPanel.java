@@ -37,9 +37,17 @@ public class RegisterPanel extends JPanel {
 		panelSaisie.add(password);
 		panelSaisie.add(walletLabel);
 		panelSaisie.add(wallet);
-				
+		
+		JButton cancelButton = new JButton("Cancel");
 		JButton registerButton = new JButton("Register");
 		
+		cancelButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				setConnexionPanel();
+			}
+		});
 		
 		registerButton.addActionListener(new ActionListener() {
 
@@ -57,10 +65,11 @@ public class RegisterPanel extends JPanel {
 			
 		});
 		
-		GridLayout globalLayout = new GridLayout(2,1);
+		GridLayout globalLayout = new GridLayout(3,1);
 		globalLayout.setVgap(15);
 		this.add(panelSaisie);
 		this.add(registerButton);
+		this.add(cancelButton);
 		this.setLayout(globalLayout);
 		
 		

@@ -6,12 +6,14 @@ import java.util.ArrayList;
 		Admin admin;
 		ArrayList<Member> member;
 		ArrayList<Member> pendingMembers;
+		ArrayList<Task> allTasks;
 		ArrayList<Task> tasksAvailable;
 		ArrayList<Task> tasksBeingDone;
 		ArrayList<Task> tasksDone;
 		ArrayList<Service> services;
 		ArrayList<Reduction> reductions;
 		private final int password;
+		private final Reduction defaultReduction;
 		private ArrayList<Task> taskDoneHistory;
 	
 	public Network (Admin admin, String name ) {
@@ -25,9 +27,11 @@ import java.util.ArrayList;
 		this.tasksDone = new ArrayList<Task>();
 		this.pendingMembers = new ArrayList<Member>();
 		this.services = new ArrayList<Service>();
+		this.defaultReduction = new Reduction("default", 1.0);
 		this.reductions = new ArrayList<Reduction>();
 		this.taskDoneHistory = new ArrayList<Task>();
-		reductions.add(new Reduction("default", 1));
+		this.allTasks = new ArrayList<Task>();
+		reductions.add(this.defaultReduction);
 		// créé un mot de passe aléatoire, puis le communique à l'admin.
 		admin.setNetworkPassword(this.password);
 		
@@ -108,7 +112,8 @@ import java.util.ArrayList;
 	 * @param t
 	 */
 	public void addTask(Task t) {
-		this.tasksAvailable.add(t);		
+		this.tasksAvailable.add(t);	
+		this.allTasks.add(t);
 	}
 	
 	public ArrayList<Task> getTasks() {
@@ -152,7 +157,12 @@ import java.util.ArrayList;
 	}
 	public void removeReduction(Reduction s, int networkPassword) {
 		// TODO Auto-generated method stub
-		if(this.password == networkPassword) this.reductions.remove(s);
+		if(this.password == networkPassword) {
+			for (Member m : this.member) {
+				if (m.getReductionValue() == s.getReductionValue()) m.setReduction(this.defaultReduction);
+			}
+			this.reductions.remove(s);
+		}
 		
 	}
 
@@ -177,6 +187,11 @@ import java.util.ArrayList;
 	public void addTaskHistory(Task task) {
 		// TODO Auto-generated method stub
 		this.taskDoneHistory.add(task);
+	}
+
+	public ArrayList<Task> getAllTasks() {
+		// TODO Auto-generated method stub
+		return this.allTasks;
 	}
 }
 

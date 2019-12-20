@@ -296,6 +296,21 @@ public class Member {
 			t.setHoursSpent(nb);
 		}
 	}
+
+	public boolean checkPassword(String password2) {
+		// TODO Auto-generated method stub
+		return this.password.equals(password2);
+	}
+
+	public void setReduction(Reduction r) {
+		// TODO Auto-generated method stub
+		this.reduction = r;
+	}
+
+	public boolean hasTasks() {
+		// TODO Auto-generated method stub
+		return this.tasksBeneficiary.size()+this.tasksSubscribed.size()+this.tasksBeneficiary.size() > 0;
+	}
 	
 
 	

@@ -121,7 +121,7 @@ public class CreateTaskPanel extends JPanel {
 	
 	public boolean nameAvailable(String s) {
 		
-		for (Task t : this.selectedNetwork.getTasks()) {
+		for (Task t : this.selectedNetwork.getAllTasks()) {
 			if (t.getName().equals(s)) return false;
 		}
 		return true;

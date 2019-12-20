@@ -24,6 +24,7 @@ public class CreateNetworkPanel extends JPanel {
 		JLabel passwordLabel = new JLabel("Admin password : ");
 		JLabel networkNameLabel = new JLabel("Network name : ");
 		JTextField networkName = new JTextField(10);
+		JButton cancelButton = new JButton("Cancel");
 
 		GridLayout saisieLayout = new GridLayout(3,2);
 		saisieLayout.setVgap(5);
@@ -39,6 +40,13 @@ public class CreateNetworkPanel extends JPanel {
 				
 		JButton createNetworkButton = new JButton("Create network");
 		
+		cancelButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				setConnexionPanel();
+			}
+		});
 		
 		createNetworkButton.addActionListener(new ActionListener() {
 
@@ -51,6 +59,9 @@ public class CreateNetworkPanel extends JPanel {
 						Network n = admin.createNetwork(networkName.getText());
 						addNetwork(n);
 						setConnexionPanel();
+					} else {
+						JOptionPane affichage = new JOptionPane();
+						affichage.showMessageDialog(null, "Wrong password", "Warning", JOptionPane.WARNING_MESSAGE);
 					}
 				}
 				
@@ -58,10 +69,11 @@ public class CreateNetworkPanel extends JPanel {
 			
 		});
 				
-		GridLayout globalLayout = new GridLayout(2,1);
+		GridLayout globalLayout = new GridLayout(3,1);
 		globalLayout.setVgap(15);
 		this.add(panelSaisie);
 		this.add(createNetworkButton);
+		this.add(cancelButton);
 		this.setLayout(globalLayout);
 		
 		
@@ -69,7 +81,7 @@ public class CreateNetworkPanel extends JPanel {
 	}
 	
 	public boolean passwordCorrect(String username, String password) {
-		return this.container.passwordCorrect(username, password);
+		return this.getMember(username).checkPassword(password);
 	}
 	
 	public Member getMember(String adminName) {

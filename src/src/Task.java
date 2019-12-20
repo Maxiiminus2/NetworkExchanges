@@ -152,7 +152,7 @@ public class Task {
 	public int getEstimatedBeneficiaryPrice() {
 		if  (this.isVolontary()) return 0;
 		else {
-			return (int) (this.getBeneficiary().getReductionValue() * this.getService().getHourlyCost() * this.estimatedHoursNeeded);
+			return (int) (this.getBeneficiary().getReductionValue() * this.getService().getHourlyCost() * this.estimatedHoursNeeded * this.contributorsRequiredNb);
 		}
 	}
 	

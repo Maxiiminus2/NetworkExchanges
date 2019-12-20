@@ -45,7 +45,7 @@ public class DefaultMemberDisplayPanel extends JPanel {
 				data[i][2] = t.getContributorsNb() + "/" + t.getContributorsRequiredNb();
 				data[i][3] = t.isVolontary() ? "Yes" : "No";
 				data[i][4] = t.getEstimatedHours();
-				data[i][5] = t.isVolontary() ? 0 : (t.getService().getHourlyCost() * t.getEstimatedHours()) / t.getContributorsRequiredNb();
+				data[i][5] = t.isVolontary() ? 0 : (t.getService().getHourlyCost() * t.getEstimatedHours());
 			}
 			
 			JTable table = new JTable(new DefaultTableModel(data, colNames) {

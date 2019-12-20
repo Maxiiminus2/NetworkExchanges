@@ -6,7 +6,7 @@ public class Admin extends Member {
 	private int networkPassword;
 	
 	public Admin(String name , int wallet, String password) {
-		super(name, wallet, null, password);
+		super(name, wallet, password);
 	}
 	
 	
