@@ -48,9 +48,9 @@ public class Member {
 	}
 	
 	/**
-	 * Détermine si un membre à une tâche t à faire.
+	 * Dï¿½termine si un membre ï¿½ une tï¿½che t ï¿½ faire.
 	 * @param t
-	 * @return vrai si le membre doit faire la tâche, faux sinon.
+	 * @return vrai si le membre doit faire la tï¿½che, faux sinon.
 	 */
 	public boolean hasTaskToDo(Task t) {
 		boolean hasTask = false;
@@ -74,7 +74,7 @@ public class Member {
 	}
 	
 	/**
-	 * Permet de déposer de l'argent dans le wallet
+	 * Permet de dï¿½poser de l'argent dans le wallet
 	 * @param amount
 	 */
 	public void depositMoney(int amount) {
@@ -123,7 +123,7 @@ public class Member {
 	}
 	
 	/**
-	 * Permet de payer les contributeurs d'une tâche réalisée pour nous.
+	 * Permet de payer les contributeurs d'une tï¿½che rï¿½alisï¿½e pour nous.
 	 * @param t
 	 * @throws MemberException
 	 */
@@ -141,12 +141,12 @@ public class Member {
 		if(t.getBeneficiary().equals(this)) {
 			t.setTaskDone(this);
 		} else {
-			throw new MemberException("Vous n'êtes pas autorisé à valider cette tâche !");
+			throw new MemberException("Vous n'ï¿½tes pas autorisï¿½ ï¿½ valider cette tï¿½che !");
 		}
 	}
 	
 	/**
-	 * Envoie un montant "amount" de tokens à un membre "m".
+	 * Envoie un montant "amount" de tokens ï¿½ un membre "m".
 	 * @param amount
 	 * @param m
 	 * @throws MemberException
@@ -165,9 +165,9 @@ public class Member {
 	}
 
 	/**
-	 * Vérifie si le membre est qualifié pour éffectuer une tâche.
+	 * Vï¿½rifie si le membre est qualifiï¿½ pour ï¿½ffectuer une tï¿½che.
 	 * @param s
-	 * @return vrai si qualifié, faux sinon.
+	 * @return vrai si qualifiï¿½, faux sinon.
 	 */
 	public boolean canDo(Service s) {
 		boolean found = false;
@@ -178,7 +178,7 @@ public class Member {
 	}
 	
 	/**
-	 * Ajoute une tâche que le membre a à faire.
+	 * Ajoute une tï¿½che que le membre a ï¿½ faire.
 	 * @param t
 	 */
 	public void addTaskToDo(Task t) {
@@ -186,7 +186,7 @@ public class Member {
 	}
 	
 	/**
-	 * Ajoute une tâche dont le membre est bénéficiaire.
+	 * Ajoute une tï¿½che dont le membre est bï¿½nï¿½ficiaire.
 	 * @param t
 	 */
 	public void addTaskBeneficiary(Task t) {
@@ -194,7 +194,7 @@ public class Member {
 	}
 		
 	/**
-	 * Créé une nouvelle tâche dont le membre sera le béneficiaire.
+	 * Crï¿½ï¿½ une nouvelle tï¿½che dont le membre sera le bï¿½neficiaire.
 	 * @param n
 	 * @param name
 	 * @param contributorsRequiredNb
@@ -208,7 +208,7 @@ public class Member {
 	}
 
 	/**
-	 * Ajoute un service de compétence du membre.
+	 * Ajoute un service de compï¿½tence du membre.
 	 * @param s
 	 */
 	public void addService(Service s) {
@@ -257,7 +257,7 @@ public class Member {
 		for (Task t : this.getTasksBeneficiary()) {
 			if(t.getNetwork().equals(selectedNetwork)) nb++;
 		}
-		return nb++;
+		return ++nb;
 	}
 
 	public ArrayList<Task> getBeneficiaryTasksByNetwork(Network selectedNetwork) {
