@@ -1,8 +1,5 @@
 package src;
 
-import java.awt.Component;
-import java.util.Map;
-
 public class Task {
 	
 	private String name;
@@ -17,9 +14,7 @@ public class Task {
 	private Service service;
 	private Network network;
 	private String status;
-	
-	// private Map<Member, Boolean> done;
-	
+		
 	public Task(String name,  int contributorsRequiredNb, Member beneficiary, boolean isVolontary, Service service, int estimatedHours, Network network) {
 		this.contributorsRequiredNb = contributorsRequiredNb;
 		this.name = name;
@@ -40,7 +35,7 @@ public class Task {
 	}
 	
 	/**
-	 * Ajoute un contributeur à une tâche.
+	 * Ajoute un contributeur a une tache.
 	 * @param m
 	 * @throws TaskException
 	 */
@@ -53,22 +48,22 @@ public class Task {
 						this.contributorsNb++;
 						m.addTaskSubscribed(this);
 					} else {
-						throw new TaskException("Vous participez déjà à la tâche !");
+						throw new TaskException("Vous participez dï¿½jï¿½ ï¿½ la tï¿½che !");
 					}
 				} else {
-					throw new TaskException("Vous êtes le bénéficiaire de cette tâche !");
+					throw new TaskException("Vous ï¿½tes le bï¿½nï¿½ficiaire de cette tï¿½che !");
 				}
 				
 			} else {
-				throw new TaskException("Ce membre n'est pas qualifié pour réaliser cette tâche !");
+				throw new TaskException("Ce membre n'est pas qualifiï¿½ pour rï¿½aliser cette tï¿½che !");
 			}
 		} else {
-			throw new TaskException("Le nombre de contributeurs requis est déjà atteint !");
+			throw new TaskException("Le nombre de contributeurs requis est dï¿½jï¿½ atteint !");
 		}
 	}
 	
 	/**
-	 * Retourne le nombre de contributeurs requis pour effectuer la tâche.
+	 * Retourne le nombre de contributeurs requis pour effectuer la tï¿½che.
 	 * @return
 	 */
 	public int getContributorsRequiredNb() {
@@ -76,7 +71,7 @@ public class Task {
 	}
 	
 	/** 
-	 * Retourne le nombre de contributeurs inscrits pour effectuer la tâche.
+	 * Retourne le nombre de contributeurs inscrits pour effectuer la tï¿½che.
 	 * @return
 	 */
 	public int getContributorsNb() {
@@ -84,7 +79,7 @@ public class Task {
 	}
 	
 	/**
-	 * Permet de valider une tâche et de l'afficher que tâche à faire aux contributeurs.
+	 * Permet de valider une tï¿½che et de l'afficher que tï¿½che ï¿½ faire aux contributeurs.
 	 */
 	public void setTaskToDo(Member b) {
 		if (this.enoughMembers() && this.getBeneficiary().getName().equals(b.getName())) {
@@ -122,7 +117,7 @@ public class Task {
 	}
 	
 	/**
-	 * Détermine s'il y a assez de membres pour effectuer une tâche.
+	 * Dï¿½termine s'il y a assez de membres pour effectuer une tï¿½che.
 	 * @return
 	 */
 	public boolean enoughMembers() {
@@ -130,7 +125,7 @@ public class Task {
 	}
 
 	/**
-	 * Retourne le prix total que la tâche coûte sans prendre en compte la réduction du bénéficiaire.
+	 * Retourne le prix total que la tï¿½che coï¿½te sans prendre en compte la rï¿½duction du bï¿½nï¿½ficiaire.
 	 * @return
 	 */
 	public int getFullPrice() {
@@ -145,7 +140,7 @@ public class Task {
 	}
 	
 	/**
-	 * Retourne le prix estimé de la tâche.
+	 * Retourne le prix estimï¿½ de la tï¿½che.
 	 * @return
 	 */
 	public int getEstimatedBeneficiaryPrice() {
@@ -160,13 +155,13 @@ public class Task {
 	}
 	
 	/**
-	 * Permet de payer les contributeurs lorsqu'ils ont effectué une tâche.
+	 * Permet de payer les contributeurs lorsqu'ils ont effectuï¿½ une tï¿½che.
 	 * @param member
 	 * @throws MemberException
 	 */
 	public void payContributors(Member benef) throws MemberException {
 		if (benef.equals(this.beneficiary)) {
-			// Montant que doit payer le bénéficiaire.
+			// Montant que doit payer le bï¿½nï¿½ficiaire.
 			int amountPerContributor = (int) ( this.service.hourlyCost * this.hoursSpent);
 			// Montant manquant que l'entreprise paye.
 			int amountPerContributorLeft = (int) (amountPerContributor - amountPerContributor * benef.getReductionValue());
@@ -210,14 +205,14 @@ public class Task {
 			
 			m.removeSubscribedTask(this);
 			
-			// On déplace tous les contributeurs de une case vers la gauche depuis celui qu'on supprime
+			// On dï¿½place tous les contributeurs de une case vers la gauche depuis celui qu'on supprime
 			for (int i = cIndex ; i < this.contributorsNb ; i++) {
 				if (i < this.contributorsRequiredNb - 1) this.contributors[i] = this.contributors[i+1];
 			}
-			// Le dernier apparaît deux fois, on le supprime.
+			// Le dernier apparaï¿½t deux fois, on le supprime.
 			this.contributors[this.contributorsNb-1] = null;
 		} else {
-			System.out.println("Ne participe pas à la tâche");
+			System.out.println("Ne participe pas ï¿½ la tï¿½che");
 		}
 		
 		this.contributorsNb--;
