@@ -48,17 +48,17 @@ public class Task {
 						this.contributorsNb++;
 						m.addTaskSubscribed(this);
 					} else {
-						throw new TaskException("Vous participez d�j� � la t�che !");
+						throw new TaskException("Vous participez deja a la tache !");
 					}
 				} else {
-					throw new TaskException("Vous �tes le b�n�ficiaire de cette t�che !");
+					throw new TaskException("Vous etes le beneficiaire de cette tache !");
 				}
 				
 			} else {
-				throw new TaskException("Ce membre n'est pas qualifi� pour r�aliser cette t�che !");
+				throw new TaskException("Ce membre n'est pas qualifie pour realiser cette tache !");
 			}
 		} else {
-			throw new TaskException("Le nombre de contributeurs requis est d�j� atteint !");
+			throw new TaskException("Le nombre de contributeurs requis est deja atteint !");
 		}
 	}
 	
@@ -173,46 +173,40 @@ public class Task {
 	}
 
 	public String getName() {
-		// TODO Auto-generated method stub
 		return this.name;
 	}
 
 	public Service getService() {
-		// TODO Auto-generated method stub
 		return this.service;
 	}
 
 	public double getEstimatedHours() {
-		// TODO Auto-generated method stub
 		return this.estimatedHoursNeeded;
 	}
 
 	public Network getNetwork() {
-		// TODO Auto-generated method stub
 		return this.network;
 	}
 
 	public String getStatus() {
-		// TODO Auto-generated method stub
 		return this.status;
 	}
 
 	public void removeContributor(Member m) {
-		// TODO Auto-generated method stub
 		
 		int cIndex = this.getContributorIndex(m);
 		if (cIndex != -1) {
 			
 			m.removeSubscribedTask(this);
 			
-			// On d�place tous les contributeurs de une case vers la gauche depuis celui qu'on supprime
+			// On deplace tous les contributeurs de une case vers la gauche depuis celui qu'on supprime
 			for (int i = cIndex ; i < this.contributorsNb ; i++) {
 				if (i < this.contributorsRequiredNb - 1) this.contributors[i] = this.contributors[i+1];
 			}
-			// Le dernier appara�t deux fois, on le supprime.
+			// Le dernier apparait deux fois, on le supprime.
 			this.contributors[this.contributorsNb-1] = null;
 		} else {
-			System.out.println("Ne participe pas � la t�che");
+			System.out.println("Ne participe pas a la tache");
 		}
 		
 		this.contributorsNb--;
@@ -238,7 +232,6 @@ public class Task {
 	}
 
 	public void setHoursSpent(int nb) {
-		// TODO Auto-generated method stub
 		this.hoursSpent = nb;
 	}
 }
