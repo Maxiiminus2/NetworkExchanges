@@ -257,7 +257,7 @@ public class Member {
 		for (Task t : this.getTasksBeneficiary()) {
 			if(t.getNetwork().equals(selectedNetwork)) nb++;
 		}
-		return ++nb;
+		return nb;
 	}
 
 	public ArrayList<Task> getBeneficiaryTasksByNetwork(Network selectedNetwork) {
