@@ -1,19 +1,17 @@
 package WindowsManagement;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 import src.*;
 
-public class TasksToDoPanel extends JPanel{
+public class TasksToDoPanel extends JPanel {
 	private Member userConnected;
 	private Network selectedNetwork;
 	private Window container;
-	private DefaultDisplayMenuBar menuBar = null;
 
 	public TasksToDoPanel(Window container) {
 		this.userConnected = container.getConnectedUser();
@@ -21,7 +19,7 @@ public class TasksToDoPanel extends JPanel{
 		this.container = container;
 		
 		if (container.getConnectedUser() != null && container.getSelectedNetwork() != null) {
-			menuBar = new DefaultDisplayMenuBar(container.getSelectedNetwork(), container.getConnectedUser(), container);
+			new DefaultDisplayMenuBar(container.getSelectedNetwork(), container.getConnectedUser(), container);
 		}
 		
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
@@ -37,8 +35,8 @@ public class TasksToDoPanel extends JPanel{
 		buttonsPanel.add(deleteButton);
 		
 		if(this.selectedNetwork != null) {
-			String colNames[] = {"Name", "Service", "Contributors", "Volontary", "Estimated hours", "Estimated income", "Status"};
-			ArrayList<Task> tasksToDo = concatenateArrays(this.userConnected.getTasksSubscribed(), this.userConnected.getTasksToDo());
+			String[] colNames = {"Name", "Service", "Contributors", "Volontary", "Estimated hours", "Estimated income", "Status"};
+			List<Task> tasksToDo = concatenateArrays(this.userConnected.getTasksSubscribed(), this.userConnected.getTasksToDo());
 			Object[][] data = new Object[tasksToDo.size()][7];
 			
 			for (int i = 0 ; i < tasksToDo.size() ; i++) {
@@ -62,59 +60,33 @@ public class TasksToDoPanel extends JPanel{
 			
 			this.add(new JScrollPane(table));
 			
-			newButton.addActionListener(new ActionListener() {
+			newButton.addActionListener(e -> setPanel("DMD"));
 
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					setPanel("DMD");
-				}
-				
-			});
-			
-			deleteButton.addActionListener(new ActionListener() {
-				
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					int selectedRow = table.getSelectedRow();
+			deleteButton.addActionListener(e -> {
+				int selectedRow = table.getSelectedRow();
 					if (selectedRow != -1 && tasksToDo.get(selectedRow).getStatus().equals("Waiting for contributors")) {
 						removeContributor(tasksToDo.get(selectedRow));
 					}
 					
-					setPanel("TP");
-				}
-			});
+				setPanel("TP");
+			});		
 			
-			
-			
-		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+		}		
+	
 		this.add(buttonsPanel);
 	}
 
 	public void removeContributor(Task t) {
-		// TODO Auto-generated method stub
 		t.removeContributor(this.userConnected);
 		
 	}
 
 	public void setPanel(String panel) {
-		// TODO Auto-generated method stub
 		this.container.changePanel(panel);
 	}
 
-	private ArrayList<Task> concatenateArrays(ArrayList<Task> tasksSubscribed, ArrayList<Task> tasksToDo) {
-		// TODO Auto-generated method stub
-		ArrayList<Task> newArrayList = new ArrayList<Task>();
+	private List<Task> concatenateArrays(List<Task> tasksSubscribed, List<Task> tasksToDo) {
+		List<Task> newArrayList = new ArrayList<>();
 		
 		for (Task t : tasksSubscribed) {
 			newArrayList.add(t);

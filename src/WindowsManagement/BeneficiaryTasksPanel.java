@@ -2,7 +2,7 @@ package WindowsManagement;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -44,7 +44,7 @@ public class BeneficiaryTasksPanel extends JPanel {
 			String colNames[] = {"Name", "Service", "Contributors", "Volontary", "Estimated hours", "Estimated price", "Status"};
 			Object[][] data = new Object[this.userConnected.getBeneficiaryTaskNb(this.selectedNetwork)][7];
 		
-			ArrayList<Task> beneficiaryTasks = this.userConnected.getBeneficiaryTasksByNetwork(this.selectedNetwork);
+			List<Task> beneficiaryTasks = this.userConnected.getBeneficiaryTasksByNetwork(this.selectedNetwork);
 			
 			for(int i = 0 ; i < beneficiaryTasks.size() ; i++) {
 				Task t = beneficiaryTasks.get(i);
