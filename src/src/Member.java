@@ -1,14 +1,11 @@
 package src;
-import java.awt.Component;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.List;
 
 public class Member {
-	String username ; 
-	int wallet ;
-	private ArrayList<Service> services ;
+	String username; 
+	int wallet;
+	private ArrayList<Service> services;
 	private ArrayList<Task> tasksSubscribed;
 	private ArrayList<Task> tasksToDo;
 	private ArrayList<Task> tasksBeneficiary;
@@ -17,10 +14,10 @@ public class Member {
 	private String password;
 
 	public Member (String username , int wallet, Reduction reduction, String password ) {
-		this.services =  new ArrayList<Service>();
-		this.tasksToDo = new ArrayList<Task>();
-		this.tasksBeneficiary = new ArrayList<Task>();
-		this.tasksSubscribed = new ArrayList<Task>();
+		this.services =  new ArrayList<>();
+		this.tasksToDo = new ArrayList<>();
+		this.tasksBeneficiary = new ArrayList<>();
+		this.tasksSubscribed = new ArrayList<>();
 	
 		this.username = username ;
 		this.wallet = wallet;
@@ -29,10 +26,10 @@ public class Member {
 	}
 	
 	public Member (String username , int wallet, String password ) {
-		this.services =  new ArrayList<Service>();
-		this.tasksToDo = new ArrayList<Task>();
-		this.tasksBeneficiary = new ArrayList<Task>();
-		this.tasksSubscribed = new ArrayList<Task>();
+		this.services =  new ArrayList<>();
+		this.tasksToDo = new ArrayList<>();
+		this.tasksBeneficiary = new ArrayList<>();
+		this.tasksSubscribed = new ArrayList<>();
 		this.username = username ;
 		this.wallet = wallet;
 		this.reduction = new Reduction("default", 1.0);
@@ -48,9 +45,9 @@ public class Member {
 	}
 	
 	/**
-	 * D�termine si un membre � une t�che t � faire.
+	 * Determine si un membre a une tache t a faire.
 	 * @param t
-	 * @return vrai si le membre doit faire la t�che, faux sinon.
+	 * @return vrai si le membre doit faire la tache, faux sinon.
 	 */
 	public boolean hasTaskToDo(Task t) {
 		boolean hasTask = false;
@@ -74,7 +71,7 @@ public class Member {
 	}
 	
 	/**
-	 * Permet de d�poser de l'argent dans le wallet
+	 * Permet de deposer de l'argent dans le wallet
 	 * @param amount
 	 */
 	public void depositMoney(int amount) {
@@ -123,7 +120,7 @@ public class Member {
 	}
 	
 	/**
-	 * Permet de payer les contributeurs d'une t�che r�alis�e pour nous.
+	 * Permet de payer les contributeurs d'une tache realisee pour nous.
 	 * @param t
 	 * @throws MemberException
 	 */
@@ -133,20 +130,20 @@ public class Member {
 		}
 	}
 	
-	public ArrayList<Task> getTasksBeneficiary() {
+	public List<Task> getTasksBeneficiary() {
 		return this.tasksBeneficiary;
 	}
 	
-	public void setTaskDone(Task t, int hoursSpent) throws MemberException {
+	public void setTaskDone(Task t) throws MemberException {
 		if(t.getBeneficiary().equals(this)) {
 			t.setTaskDone(this);
 		} else {
-			throw new MemberException("Vous n'�tes pas autoris� � valider cette t�che !");
+			throw new MemberException("Vous n'etes pas autorise a valider cette tache !");
 		}
 	}
 	
 	/**
-	 * Envoie un montant "amount" de tokens � un membre "m".
+	 * Envoie un montant "amount" de tokens a un membre "m".
 	 * @param amount
 	 * @param m
 	 * @throws MemberException
@@ -165,9 +162,9 @@ public class Member {
 	}
 
 	/**
-	 * V�rifie si le membre est qualifi� pour �ffectuer une t�che.
+	 * Verifie si le membre est qualifie pour effectuer une tache.
 	 * @param s
-	 * @return vrai si qualifi�, faux sinon.
+	 * @return vrai si qualifie, faux sinon.
 	 */
 	public boolean canDo(Service s) {
 		boolean found = false;
@@ -178,7 +175,7 @@ public class Member {
 	}
 	
 	/**
-	 * Ajoute une t�che que le membre a � faire.
+	 * Ajoute une tache que le membre a a faire.
 	 * @param t
 	 */
 	public void addTaskToDo(Task t) {
@@ -186,7 +183,7 @@ public class Member {
 	}
 	
 	/**
-	 * Ajoute une t�che dont le membre est b�n�ficiaire.
+	 * Ajoute une tache dont le membre est beneficiaire.
 	 * @param t
 	 */
 	public void addTaskBeneficiary(Task t) {
@@ -194,7 +191,7 @@ public class Member {
 	}
 		
 	/**
-	 * Cr�� une nouvelle t�che dont le membre sera le b�neficiaire.
+	 * Cree une nouvelle tache dont le membre sera le beneficiaire.
 	 * @param n
 	 * @param name
 	 * @param contributorsRequiredNb
@@ -208,7 +205,7 @@ public class Member {
 	}
 
 	/**
-	 * Ajoute un service de comp�tence du membre.
+	 * Ajoute un service de competence du membre.
 	 * @param s
 	 */
 	public void addService(Service s) {
@@ -225,34 +222,28 @@ public class Member {
 	}
 
 	public String getPassword() {
-		// TODO Auto-generated method stub
 		return this.password;
 	}
 
-	public ArrayList<Service> getServices() {
-		// TODO Auto-generated method stub
+	public List<Service> getServices() {
 		return this.services;
 	}
 
 	public void removeService(Service service) {
-		// TODO Auto-generated method stub
 		this.services.remove(service);
 		
 	}
 
 	public void setPassword(String newPassword) {
-		// TODO Auto-generated method stub
 		this.password = newPassword;
 		
 	}
 
 	public void setUsername(String newUsername) {
-		// TODO Auto-generated method stub
 		this.username = newUsername;
 	}
 
 	public int getBeneficiaryTaskNb(Network selectedNetwork) {
-		// TODO Auto-generated method stub
 		int nb = 0;
 		for (Task t : this.getTasksBeneficiary()) {
 			if(t.getNetwork().equals(selectedNetwork)) nb++;
@@ -260,9 +251,8 @@ public class Member {
 		return nb;
 	}
 
-	public ArrayList<Task> getBeneficiaryTasksByNetwork(Network selectedNetwork) {
-		// TODO Auto-generated method stub
-		ArrayList<Task> result = new ArrayList<Task>();
+	public List<Task> getBeneficiaryTasksByNetwork(Network selectedNetwork) {
+		ArrayList<Task> result = new ArrayList<>();
 		
 		for (Task t : this.tasksBeneficiary) {
 			if (t.getNetwork().equals(selectedNetwork)) result.add(t);
@@ -280,35 +270,29 @@ public class Member {
 	}
 
 
-	public ArrayList<Task> getTasksSubscribed() {
-		// TODO Auto-generated method stub
+	public List<Task> getTasksSubscribed() {
 		return this.tasksSubscribed;
 	}
 
-	public ArrayList<Task> getTasksToDo() {
-		// TODO Auto-generated method stub
+	public List<Task> getTasksToDo() {
 		return this.tasksToDo;
 	}
 
 	public void setHoursSpent(int nb, Task t) {
-		// TODO Auto-generated method stub
 		if(this.getName().equals(t.getBeneficiary().getName())){
 			t.setHoursSpent(nb);
 		}
 	}
 
 	public boolean checkPassword(String password2) {
-		// TODO Auto-generated method stub
 		return this.password.equals(password2);
 	}
 
 	public void setReduction(Reduction r) {
-		// TODO Auto-generated method stub
 		this.reduction = r;
 	}
 
 	public boolean hasTasks() {
-		// TODO Auto-generated method stub
 		return this.tasksBeneficiary.size()+this.tasksSubscribed.size()+this.tasksBeneficiary.size() > 0;
 	}
 	

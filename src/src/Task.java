@@ -63,7 +63,7 @@ public class Task {
 	}
 	
 	/**
-	 * Retourne le nombre de contributeurs requis pour effectuer la t�che.
+	 * Retourne le nombre de contributeurs requis pour effectuer la tache.
 	 * @return
 	 */
 	public int getContributorsRequiredNb() {
@@ -71,7 +71,7 @@ public class Task {
 	}
 	
 	/** 
-	 * Retourne le nombre de contributeurs inscrits pour effectuer la t�che.
+	 * Retourne le nombre de contributeurs inscrits pour effectuer la tache.
 	 * @return
 	 */
 	public int getContributorsNb() {
@@ -79,7 +79,7 @@ public class Task {
 	}
 	
 	/**
-	 * Permet de valider une t�che et de l'afficher que t�che � faire aux contributeurs.
+	 * Permet de valider une tache et de l'afficher que tache a faire aux contributeurs.
 	 */
 	public void setTaskToDo(Member b) {
 		if (this.enoughMembers() && this.getBeneficiary().getName().equals(b.getName())) {
@@ -117,7 +117,7 @@ public class Task {
 	}
 	
 	/**
-	 * D�termine s'il y a assez de membres pour effectuer une t�che.
+	 * Determine s'il y a assez de membres pour effectuer une tache.
 	 * @return
 	 */
 	public boolean enoughMembers() {
@@ -125,7 +125,7 @@ public class Task {
 	}
 
 	/**
-	 * Retourne le prix total que la t�che co�te sans prendre en compte la r�duction du b�n�ficiaire.
+	 * Retourne le prix total que la tache coute sans prendre en compte la reduction du beneficiaire.
 	 * @return
 	 */
 	public int getFullPrice() {
@@ -140,7 +140,7 @@ public class Task {
 	}
 	
 	/**
-	 * Retourne le prix estim� de la t�che.
+	 * Retourne le prix estime de la tache.
 	 * @return
 	 */
 	public int getEstimatedBeneficiaryPrice() {
@@ -155,13 +155,13 @@ public class Task {
 	}
 	
 	/**
-	 * Permet de payer les contributeurs lorsqu'ils ont effectu� une t�che.
+	 * Permet de payer les contributeurs lorsqu'ils ont effectue une tache.
 	 * @param member
 	 * @throws MemberException
 	 */
 	public void payContributors(Member benef) throws MemberException {
 		if (benef.equals(this.beneficiary)) {
-			// Montant que doit payer le b�n�ficiaire.
+			// Montant que doit payer le beneficiaire.
 			int amountPerContributor = (int) ( this.service.hourlyCost * this.hoursSpent);
 			// Montant manquant que l'entreprise paye.
 			int amountPerContributorLeft = (int) (amountPerContributor - amountPerContributor * benef.getReductionValue());
